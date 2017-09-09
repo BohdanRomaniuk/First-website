@@ -3,3 +3,13 @@ body
   margin:0 auto;
   background:#ccc url(images/background.jpg);
 }
+
+#list
+{
+	background: rgba(0,0,0,0.7);
+}
+
+#navigation li
+{
+	display: table-cell;
+}
