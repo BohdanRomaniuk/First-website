@@ -38,3 +38,32 @@ body
 {
 	margin: 20px;
 }
+
+h3
+{
+	border-bottom: 1px solid #CCCCCC;
+	padding: 4px 0;
+	margin-bottom: 4px;
+}
+
+.post-text
+{
+	color: #5c6165;
+}
+
+.post-info
+{
+	text-align: right;
+}
+
+.poster
+{
+	color: #555758;
+    font-weight: bold;
+}
+
+.post-date
+{
+	color: #555758;
+    font-style: italic;
+}
