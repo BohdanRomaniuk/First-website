@@ -34,7 +34,7 @@ body
 	display: table;
 }
 
-#post-container
+.post-container
 {
 	margin: 20px;
 }
