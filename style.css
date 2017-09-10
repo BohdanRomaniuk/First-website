@@ -1,4 +1,3 @@
-
 body
 {
 	margin:0 auto;
@@ -44,6 +43,10 @@ body
 .post-container
 {
 	margin: 20px;
+	border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #fff;
+    padding: 4px;
 }
 
 h3
@@ -51,6 +54,7 @@ h3
 	border-bottom: 1px solid #CCCCCC;
 	padding: 4px 0;
 	margin-bottom: 4px;
+	margin-top: 4px;
 }
 
 .post-text
