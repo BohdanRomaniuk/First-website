@@ -48,6 +48,7 @@ h3
 
 .post-text
 {
+	margin: 10px 0;
 	color: #5c6165;
 }
 
@@ -66,4 +67,11 @@ h3
 {
 	color: #555758;
     font-style: italic;
+}
+
+#profile-photo
+{
+	float: left;
+    max-width: 300px;
+    margin-right: 10px;
 }
