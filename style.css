@@ -75,3 +75,13 @@ h3
     max-width: 300px;
     margin-right: 10px;
 }
+
+#social-block
+{
+	text-align: center;
+}
+
+.social-icon
+{
+	margin-right: 5px;
+}
