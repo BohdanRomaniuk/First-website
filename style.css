@@ -1,6 +1,7 @@
 body
 {
 	margin:0 auto;
+	font-family: Arial, sans-serif;
 	background:#ccc url(images/background.jpg);
 }
 
@@ -19,6 +20,7 @@ body
 #navigation li a
 {
 	margin: 0 30px;
+	padding: 14px;
 	text-transform: uppercase;
     text-decoration: none;
 	color: white;
