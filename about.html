@@ -37,6 +37,17 @@
 </div>
 <script>
 	document.getElementById("about").className += "active";
+	var image = document.getElementById("profile-photo");
+	image.addEventListener("click", function() {
+		if(this.style.maxWidth=="1000px")
+		{
+			this.style.maxWidth="300px";
+		}
+		else
+		{
+			this.style.maxWidth="1000px";
+		}	
+	},false);
 </script>
 </body>
 </html>
