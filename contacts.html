@@ -51,6 +51,12 @@
 </div>
 <script>
 	document.getElementById("contacts").className += "active";
+	var images = document.getElementsByTagName("img");
+	for(var i=0; i<images.length; i++)
+	{
+		images[i].addEventListener("mouseover", function() { this.style.maxWidth="200px";}, false);
+		images[i].addEventListener("mouseout", function() { this.style.maxWidth="140px";}, false);
+	}
 </script>
 </body>
 </html>
