@@ -5,11 +5,25 @@ body
 	background:#ccc url(images/background.jpg);
 }
 
+#logo
+{
+	position: absolute;
+    padding: 12px;
+    margin: auto;
+    color: #83e407;
+    font-size: 23px;
+}
+
 .list
 {
 	background: rgba(0,0,0,0.7);
 	box-shadow: inset 0 -1px 0 #6f6f6f;
     border-bottom: 1px solid #232323;
+}
+
+#navigation
+{
+	float: right;
 }
 
 #navigation li
@@ -19,7 +33,7 @@ body
 
 #navigation li a
 {
-	margin: 0 30px;
+	margin: 0 7px;
 	padding: 14px;
 	text-transform: uppercase;
     text-decoration: none;
