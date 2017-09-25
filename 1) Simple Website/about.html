@@ -11,7 +11,9 @@
     <tr>
       <td height="39" class="list" align="center">
       <div style="max-width:1000px;">
-		<div id="logo">Блог Романюка Богдана</div>
+		<a href="index.html">
+			<div id="logo" onmouseover="ChangeColorToBlue(this);" onmouseout="ChangeColorToGreen(this);">Блог Романюка Богдана</div>
+		</a>
 		<ul id="navigation">
           <li><a id="main" href="index.html">Головна</a></li>
           <li><a id="about" href="about.html">Про мене</a></li>
@@ -26,7 +28,7 @@
 	<div class="post-container">
 		<h3>Деяка інформація про мене</h3>
 		<div class="post-text" style="display: inline-block;">
-			<img src="images/profile-photo.jpg" id="profile-photo" title="Моя фотка" alt="Моя фотка"/>
+			<img src="images/profile-photo.jpg" id="profile-photo" title="Моя фотка" alt="Моя фотка" onclick="ShowImageFullSize(this);"/>
 			Як я вже зауважив на головні сторінці в першому пості, звати Богдан Романюк, мені 20 років і на даний момент  навчаюся в Львівському Національному Університеті імені Івана Франка на факультеті прикладної математики.  
 			</br>
 			</br>
@@ -39,17 +41,7 @@
 </div>
 <script>
 	document.getElementById("about").className += "active";
-	var image = document.getElementById("profile-photo");
-	image.addEventListener("click", function() {
-		if(this.style.maxWidth=="1000px")
-		{
-			this.style.maxWidth="300px";
-		}
-		else
-		{
-			this.style.maxWidth="1000px";
-		}	
-	},false);
 </script>
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>

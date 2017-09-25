@@ -11,7 +11,9 @@
     <tr>
       <td height="39" class="list" align="center">
       <div style="max-width:1000px;">
-		<div id="logo">Блог Романюка Богдана</div>
+		<a href="index.html">
+			<div id="logo" onmouseover="ChangeColorToBlue(this);" onmouseout="ChangeColorToGreen(this);">Блог Романюка Богдана</div>
+		</a>
         <ul id="navigation">
           <li><a id="main" href="index.html">Головна</a></li>
           <li><a id="about" href="about.html">Про мене</a></li>
@@ -24,7 +26,7 @@
 </table>
 <div id="main-container">
 	<div class="post-container">
-		<h3>Перший пост у блозі</h3>
+		<h3 onclick="ShowPostTitle(this);">Перший пост у блозі</h3>
 		<div class="post-text">
 		    <div class="post-info">
 				<div class="poster">Богдан</div>
@@ -36,7 +38,7 @@
 		</div>
 	</div>
 	<div class="post-container">
-		<h3>Оновлено інформацію про мене</h3>
+		<h3 onclick="ShowPostTitle(this);">Оновлено інформацію про мене</h3>
 		<div class="post-text">
 		    <div class="post-info">
 				<div class="poster">Богдан</div>
@@ -46,7 +48,7 @@
 		</div>
 	</div>
 	<div class="post-container">
-		<h3>Додано посилання на мої соцмережі</h3>
+		<h3 onclick="ShowPostTitle(this);">Додано посилання на мої соцмережі</h3>
 		<div class="post-text">
 		    <div class="post-info">
 				<div class="poster">Богдан</div>
@@ -59,5 +61,6 @@
 <script>
 	document.getElementById("main").className += "active";
 </script>
+<script type="text/javascript" src="main.js"></script>
 </body>
 </html>
