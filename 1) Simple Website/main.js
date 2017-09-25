@@ -13,11 +13,13 @@ function ShowImageFullSize(image)
 function ChangeColorToBlue(element)
 {
 	element.style.color = "#07e4d1";
+	element.style.fontStyle = "italic";
 }
 
 function ChangeColorToGreen(element)
 {
 	element.style.color = "#83e407";
+	element.style.fontStyle = "normal";
 }
 
 function ShowPostTitle(container)
