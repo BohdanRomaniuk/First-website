@@ -1,11 +1,11 @@
 angular.module('nodeTodo', [])
 .controller('mainController', ($scope, $http) => {
   $scope.formData = {};
-  $scope.todoData = {};
+  $scope.allTovars = {};
   // Get all todos
-  $http.get('/asus-shop')
+  $http.get('/index')
   .success((data) => {
-    $scope.todoData = data;
+    $scope.allTovars = data;
     console.log(data);
   })
   .error((error) => {
@@ -13,10 +13,10 @@ angular.module('nodeTodo', [])
   });
   // Create a new todo
   $scope.createTodo = () => {
-    $http.post('/asus-shop', $scope.formData)
+    $http.post('/index', $scope.formData)
     .success((data) => {
       $scope.formData = {};
-      $scope.todoData = data;
+      $scope.allTovars = data;
       console.log(data);
     })
     .error((error) => {
@@ -24,10 +24,10 @@ angular.module('nodeTodo', [])
     });
   };
   // Delete a todo
-  $scope.deleteTodo = (todoID) => {
-    $http.delete('/asus-shop/' + todoID)
+  $scope.deleteTovar = (todoID) => {
+    $http.delete('/index/' + todoID)
     .success((data) => {
-      $scope.todoData = data;
+      $scope.allTovars = data;
       console.log(data);
     })
     .error((data) => {
