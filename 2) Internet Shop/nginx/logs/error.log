@@ -1,0 +1,91 @@
+2017/07/25 18:10:13 [notice] 11936#4664: signal process started
+2017/08/02 12:31:34 [emerg] 12888#11328: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2017/08/02 12:32:21 [notice] 11828#14716: signal process started
+2017/08/02 12:32:38 [error] 14612#8984: *1 CreateFile() "C:\Users\pc\Desktop\Web_course\1-2\nginx-1.12.1\nginx-1.12.1/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2017/08/02 12:57:03 [notice] 12152#14824: signal process started
+2017/08/02 12:57:03 [error] 12152#14824: OpenEvent("Global\ngx_stop_13396") failed (5: Access is denied)
+2017/08/02 12:58:13 [notice] 14012#11932: signal process started
+2017/08/02 12:58:33 [notice] 2928#14328: signal process started
+2017/08/03 11:12:15 [notice] 15204#4676: signal process started
+2017/08/03 15:28:56 [error] 10056#12056: *2 upstream timed out (10060: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond) while connecting to upstream, client: 127.0.0.1, server: , request: "GET / HTTP/1.1", upstream: "http://216.58.209.67:8080/", host: "localhost:8080"
+2017/08/03 15:29:56 [error] 10056#12056: *2 upstream timed out (10060: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond) while connecting to upstream, client: 127.0.0.1, server: , request: "GET /favicon.ico HTTP/1.1", upstream: "http://216.58.209.67:8080/favicon.ico", host: "localhost:8080", referrer: "http://localhost:8080/"
+2017/08/03 15:30:44 [notice] 15852#4520: signal process started
+2017/08/03 15:31:49 [notice] 9584#9044: signal process started
+2017/08/03 15:31:52 [error] 14740#15228: *8 upstream timed out (10060: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond) while connecting to upstream, client: 127.0.0.1, server: localhost, request: "GET / HTTP/1.1", upstream: "http://216.58.209.67:8080/", host: "localhost:8080"
+2017/08/03 15:32:54 [notice] 15488#16176: signal process started
+2017/08/03 15:34:46 [notice] 16144#13068: signal process started
+2017/08/03 15:35:14 [notice] 9728#4924: signal process started
+2017/08/03 15:36:22 [notice] 5816#16244: signal process started
+2017/08/03 15:36:38 [error] 13976#16216: *57 CreateFile() "C:\Users\pc\Desktop\Web_course\1-2\nginx-1.12.1\nginx-1.12.1/html/set" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /set?d=.6960.7516.&m=localhost&z=zhUe-YTmSHmzqOyRrFQHoA&h=ce151ef984e64879b3a8ec91ac5407a0&t= HTTP/1.1", host: "zdbb.localhost", referrer: "http://localhost:8080/"
+2017/08/03 15:47:22 [error] 13976#16216: *61 CreateFile() "C:\Users\pc\Desktop\Web_course\1-2\nginx-1.12.1\nginx-1.12.1/html/favicon.ico" failed (2: The system cannot find the file specified), client: 192.168.88.13, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "192.168.88.12", referrer: "http://192.168.88.12/"
+2017/08/03 15:57:38 [notice] 14344#12244: signal process started
+2017/08/03 15:59:06 [notice] 4520#15596: signal process started
+2017/08/03 18:16:59 [notice] 14816#12468: signal process started
+2017/09/04 14:59:19 [emerg] 5900#10900: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2017/09/04 15:22:23 [notice] 9260#10992: signal process started
+2017/09/12 11:21:25 [error] 7812#7152: *1 CreateFile() "C:\Users\vovk\Desktop\Web_course_11.09.2017\1-2\nginx-1.12.1\nginx-1.12.1/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2017/09/12 11:22:10 [notice] 1704#6268: signal process started
+2017/09/12 11:22:10 [emerg] 6576#6456: bind() to 0.0.0.0:80 failed (10013: An attempt was made to access a socket in a way forbidden by its access permissions)
+2017/09/12 11:22:33 [notice] 4148#6200: signal process started
+2017/09/30 18:45:44 [emerg] 2708#7968: CreateFile() "E:\Dropbox\ЛНУ\3 курс\WEB (Вовк)\WebProgramming-Tasks\2) Internet Shop\nginx/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
+2017/09/30 18:45:46 [emerg] 8076#4636: CreateFile() "E:\Dropbox\ЛНУ\3 курс\WEB (Вовк)\WebProgramming-Tasks\2) Internet Shop\nginx/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
+2017/09/30 18:45:47 [emerg] 3196#7844: CreateFile() "E:\Dropbox\ЛНУ\3 курс\WEB (Вовк)\WebProgramming-Tasks\2) Internet Shop\nginx/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
+2017/09/30 18:45:48 [emerg] 7520#5868: CreateFile() "E:\Dropbox\ЛНУ\3 курс\WEB (Вовк)\WebProgramming-Tasks\2) Internet Shop\nginx/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
+2017/09/30 18:45:48 [emerg] 5420#5148: CreateFile() "E:\Dropbox\ЛНУ\3 курс\WEB (Вовк)\WebProgramming-Tasks\2) Internet Shop\nginx/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
+2017/09/30 18:45:49 [emerg] 5024#2680: CreateFile() "E:\Dropbox\ЛНУ\3 курс\WEB (Вовк)\WebProgramming-Tasks\2) Internet Shop\nginx/conf/nginx.conf" failed (1113: No mapping for the Unicode character exists in the target multi-byte code page)
+2017/09/30 18:46:21 [error] 4036#2204: *1 CreateFile() "E:\nginx/html/035/bt/announce.php" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /035/bt/announce.php?uk=1LoheUbbs3&&info_hash=%eb%e87%85v%8fG%82%0e%b4R%b8%3e%ae%2b%e7%3f%8b%87%16&peer_id=-UT3500-%8c%ab%c2%82%f7%0f%e4%a3%24%0e%e3%ac&port=55031&uploaded=62259200&downloaded=0&left=0&corrupt=0&key=A73F8F8A&event=started&numwant=200&compact=1&no_peer_id=1 HTTP/1.1", host: "localhost"
+2017/09/30 18:47:30 [error] 4036#2204: *7 CreateFile() "E:\nginx/html/favicon.ico" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /favicon.ico HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2017/09/30 18:50:11 [error] 4036#2204: *60 CreateFile() "E:\nginx/html/asus-shop" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: localhost, request: "GET /asus-shop HTTP/1.1", host: "localhost", referrer: "http://localhost/"
+2017/09/30 18:53:49 [emerg] 404#7796: duplicate location "/" in E:\nginx/conf/nginx.conf:102
+2017/09/30 18:54:24 [notice] 212#1792: signal process started
+2017/09/30 18:55:06 [error] 6728#588: *94 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:55:37 [error] 6728#588: *99 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/index.html HTTP/1.1", host: "localhost"
+2017/09/30 18:55:40 [error] 6728#588: *99 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/index.html HTTP/1.1", host: "localhost"
+2017/09/30 18:55:54 [error] 6728#588: *105 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/index.html HTTP/1.1", host: "localhost"
+2017/09/30 18:55:56 [error] 6728#588: *105 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/index.html HTTP/1.1", host: "localhost"
+2017/09/30 18:55:57 [error] 6728#588: *105 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/index.html HTTP/1.1", host: "localhost"
+2017/09/30 18:56:20 [error] 6728#588: *111 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/ HTTP/1.1", host: "localhost"
+2017/09/30 18:56:26 [error] 6728#588: *115 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:39 [notice] 7236#6732: signal process started
+2017/09/30 18:56:43 [error] 7844#3832: *119 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:43 [error] 7844#3832: *122 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:44 [error] 7844#3832: *122 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:44 [error] 7844#3832: *122 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:45 [error] 7844#3832: *122 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:45 [error] 7844#3832: *122 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:46 [error] 7844#3832: *122 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:46 [error] 7844#3832: *122 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:49 [error] 7844#3832: *122 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:51 [error] 7844#3832: *122 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:52 [error] 7844#3832: *122 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:52 [error] 7844#3832: *122 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:52 [error] 7844#3832: *122 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:53 [error] 7844#3832: *122 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:53 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:54 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:54 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:55 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:55 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:55 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:56 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:56 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:57 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:56:57 [error] 7844#3832: *124 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/index.html HTTP/1.1", host: "localhost:8080"
+2017/09/30 18:57:05 [error] 7844#3832: *128 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/index.html HTTP/1.1", host: "localhost"
+2017/09/30 18:57:38 [notice] 4708#1792: signal process started
+2017/09/30 18:57:41 [error] 212#4600: *131 CreateFile() "E:\nginx/html/files/index.html" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/index.html HTTP/1.1", host: "localhost"
+2017/09/30 19:00:33 [error] 212#4600: *155 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:00:40 [notice] 6964#3884: signal process started
+2017/09/30 19:00:42 [error] 5228#5656: *164 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:00:43 [error] 5228#5656: *164 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:00:44 [error] 5228#5656: *169 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:00:44 [error] 5228#5656: *169 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:01:31 [error] 5228#5656: *172 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: , request: "GET /files/ HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:01:37 [error] 5228#5656: *174 "E:\nginx/html/files/index.html" is not found (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /files/ HTTP/1.1", host: "localhost"
+2017/09/30 19:11:48 [notice] 7824#6456: signal process started
+2017/09/30 19:15:17 [error] 4704#7880: *285 CreateFile() "E:\nginx/html/stylesheets/style.cs" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /stylesheets/style.cs HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:15:19 [error] 4704#7880: *287 CreateFile() "E:\nginx/html/stylesheets/style.cs" failed (2: The system cannot find the file specified), client: 127.0.0.1, server: , request: "GET /stylesheets/style.cs HTTP/1.1", host: "localhost:7070"
+2017/09/30 19:16:22 [error] 4704#7880: *298 CreateFile() "E:\nginx/html/035/bt/announce.php" failed (3: The system cannot find the path specified), client: 127.0.0.1, server: localhost, request: "GET /035/bt/announce.php?uk=1LoheUbbs3&&info_hash=%eb%e87%85v%8fG%82%0e%b4R%b8%3e%ae%2b%e7%3f%8b%87%16&peer_id=-UT3500-%8c%ab%c2%82%f7%0f%e4%a3%24%0e%e3%ac&port=55031&uploaded=62259200&downloaded=0&left=0&corrupt=0&key=763677ED&event=started&numwant=200&compact=1&no_peer_id=1 HTTP/1.1", host: "localhost"
+2017/09/30 19:17:19 [notice] 6724#4036: signal process started
+2017/09/30 19:18:59 [notice] 1300#6876: signal process started
+2017/09/30 19:27:33 [notice] 2608#4952: signal process started

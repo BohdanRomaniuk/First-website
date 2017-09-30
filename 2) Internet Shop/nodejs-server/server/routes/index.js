@@ -5,7 +5,7 @@ const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@localhost:5432/todo';
 
 router.get('/', (req, res, next) => {
-  res.sendFile(path.join(__dirname, '..', '..', 'client', 'views', 'index.html'));
+  res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
 });
 
 router.get('/asus-shop', (req, res, next) => {
