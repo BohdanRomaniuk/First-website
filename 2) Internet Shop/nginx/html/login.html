@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
-<html >
+<html ng-app="asusShop">
 <head>
 	<meta charset="utf-8">
 	<title>Ноутбуки Asus - Вхід користувача</title>
 	<link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
 </head>
-<body >
+<body ng-controller="mainController">
 <table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
   <tbody>
     <tr>
@@ -29,18 +29,19 @@
 		<h3>Вхід користувача</h3>
 		<div class="post-text">
 			<div style="text-align:center;">
-			<form action="/server/login" method="post">
+			<p><div id="status"></div>
+			<form>
 				<p>
 					<label>Імя користувача:</label>
 					</br>
-					<input type="text" name="user_name" placeholder="Ваше імя користувача" style="width: 200px;"/>
+					<input type="text" name="user_name" placeholder="Ваше імя користувача" style="width: 200px;" ng-model="formData.username" required="required"/>
 				</p>
 				<p>
 					<label>Пароль:</label>
 					</br>
-					<input type="password" name="user_password" placeholder="Введіть свій пароль" style="width: 200px;"/>
+					<input type="password" name="user_password" placeholder="Введіть свій пароль" style="width: 200px;" ng-model="formData.userpassword" required="required"/>
 				</p>
-				<input type="submit" class="btn" name="submit" value="Увійти"></input>
+				<button type="submit" class="btn" name="submit" ng-click="loginUser()">Увійти</button>
 			</form>
 			</div>
 		</div>

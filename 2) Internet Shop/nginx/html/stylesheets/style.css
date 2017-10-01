@@ -61,6 +61,13 @@ body
 	display: table;
 }
 
+input[type="text"],[type="password"]
+{
+	border: 1px solid #ccc;
+    padding: 5px;
+    border-radius: 3px;
+}
+
 .post-container
 {
 	margin: 20px;
@@ -86,7 +93,7 @@ body
 	cursor: pointer;
 }
 
-.status
+#status
 {
 	color: #80e004;
     font-weight: bold;
