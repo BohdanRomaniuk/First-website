@@ -70,6 +70,28 @@ body
     padding: 4px;
 }
 
+.post-container label
+{
+	color: #000;
+    font-weight: bold;
+}
+
+.btn
+{
+	background-color: #a2fd83;
+    border: 1px solid #06ab20;
+    padding: 6px;
+    border-radius: 5px;
+    font-weight: bold;
+	cursor: pointer;
+}
+
+.status
+{
+	color: #80e004;
+    font-weight: bold;
+}
+
 h3
 {
 	border-bottom: 1px solid #CCCCCC;

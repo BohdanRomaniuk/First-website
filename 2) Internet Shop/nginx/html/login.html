@@ -28,7 +28,21 @@
 	<div class="post-container"  style="display: grid;">
 		<h3>Вхід користувача</h3>
 		<div class="post-text">
-			
+			<div style="text-align:center;">
+			<form action="/server/login" method="post">
+				<p>
+					<label>Імя користувача:</label>
+					</br>
+					<input type="text" name="user_name" placeholder="Ваше імя користувача" style="width: 200px;"/>
+				</p>
+				<p>
+					<label>Пароль:</label>
+					</br>
+					<input type="password" name="user_password" placeholder="Введіть свій пароль" style="width: 200px;"/>
+				</p>
+				<input type="submit" class="btn" name="submit" value="Увійти"></input>
+			</form>
+			</div>
 		</div>
 	</div>
 </div>

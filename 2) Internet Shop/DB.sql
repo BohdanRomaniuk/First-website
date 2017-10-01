@@ -31,3 +31,38 @@ INSERT INTO tovars(tovar_name, image, description, price) VALUES('Asus X751SA', 
 SSD, ГБ: немає
 Оптичний привід: немає
 Графічний адаптер, обєм памяті: NVIDIA GeForce GTX 920M, 4 ГБ', 10999);
+
+INSERT INTO tovars(tovar_name, image, description, price) VALUES('ASUS Q551LN', '/images/q551ln.jpg', 'Операційна система: Windows 8.1
+Діагональ: 15,6
+Роздільна здатність: 1920x1080
+Процесор: Intel Core i7-5500U
+Частота, GHz: Intel Core i7-5500U
+Кількість ядер процесора: 2
+Обсяг оперативної памяті, ГБ: 8
+Максимальний обсяг оперативної памяті, ГБ: 8
+Жорсткий диск, ГБ: 1000
+SSD, ГБ: немає
+Оптичний привід: немає
+Графічний адаптер, обєм памяті: NVIDIA GeForce 840м, 2 ГБ', 18753);
+
+INSERT INTO tovars(tovar_name, image, description, price) VALUES('ASUS K501LX', '/images/k501lx.jpg', 'Операційна система: Windows 8.1
+Діагональ: 15,6
+Роздільна здатність: 1920x1080
+Процесор: Intel Core i5-5200U
+Частота, GHz: 2,2-2,7
+Кількість ядер процесора: 2
+Обсяг оперативної памяті, ГБ: 8
+Максимальний обсяг оперативної памяті, ГБ: 8
+Жорсткий диск, ГБ: 1000
+SSD, ГБ: 128
+Оптичний привід: немає
+Графічний адаптер, обєм памяті: NVIDIA GeForce GTX 950M, 2 ГБ', 18250);
+
+CREATE TABLE users(
+	username varchar(50) PRIMARY KEY,
+    userpassword varchar(50) NOT NULL,
+    userrole varchar(10) NOT NULL
+);
+
+INSERT INTO users VALUES('admin','admin','admin');
+INSERT INTO users VALUES('user1','user1','simple');
