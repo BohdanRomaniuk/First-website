@@ -4,11 +4,13 @@ const pg = require('pg');
 const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@localhost:5432/asus_shop';
 
-//router.get('/', (req, res, next) => {
-//  res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
-//});
+/*
+	router.get('/', (req, res, next) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'index.html'));
+});
+*/
 
-router.get('/index', (req, res, next) => {
+router.get('/server/index', (req, res, next) => {
   const results = [];
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
@@ -32,7 +34,7 @@ router.get('/index', (req, res, next) => {
   });
 });
 
-router.post('/index', (req, res, next) => {
+router.post('/server/index', (req, res, next) => {
   const results = [];
   // Grab data from http request
   const data = {text: req.body.text, complete: false};
@@ -61,7 +63,7 @@ router.post('/index', (req, res, next) => {
   });
 });
 
-router.put('/index/:todo_id', (req, res, next) => {
+router.put('/server/index/:todo_id', (req, res, next) => {
   const results = [];
   // Grab data from the URL parameters
   const id = req.params.todo_id;
@@ -92,7 +94,7 @@ router.put('/index/:todo_id', (req, res, next) => {
   });
 });
 
-router.delete('/index/:todo_id', (req, res, next) => {
+router.delete('/server/index/:todo_id', (req, res, next) => {
   const results = [];
   // Grab data from the URL parameters
   const id = req.params.todo_id;
@@ -120,7 +122,7 @@ router.delete('/index/:todo_id', (req, res, next) => {
   });
 });
 
-router.get('/users', (req, res, next) => {
+router.get('/server/users', (req, res, next) => {
 	const results = [];
   // Get a Postgres client from the connection pool
   pg.connect(connectionString, (err, client, done) => {
@@ -131,7 +133,7 @@ router.get('/users', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
     // SQL Query > Select Data
-    const query = client.query('SELECT * FROM items ORDER BY id DESC;');
+    const query = client.query('SELECT * FROM tovars ORDER BY tovar_id DESC;');
     // Stream results back one row at a time
     query.on('row', (row) => {
       results.push(row);

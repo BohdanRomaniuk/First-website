@@ -3,7 +3,7 @@ angular.module('nodeTodo', [])
   $scope.formData = {};
   $scope.allTovars = {};
   // Get all todos
-  $http.get('/index')
+  $http.get('/server/index')
   .success((data) => {
     $scope.allTovars = data;
     console.log(data);
@@ -13,7 +13,7 @@ angular.module('nodeTodo', [])
   });
   // Create a new todo
   $scope.createTodo = () => {
-    $http.post('/index', $scope.formData)
+    $http.post('/server/index', $scope.formData)
     .success((data) => {
       $scope.formData = {};
       $scope.allTovars = data;
@@ -25,7 +25,7 @@ angular.module('nodeTodo', [])
   };
   // Delete a todo
   $scope.deleteTovar = (todoID) => {
-    $http.delete('/index/' + todoID)
+    $http.delete('/server/index/' + todoID)
     .success((data) => {
       $scope.allTovars = data;
       console.log(data);
