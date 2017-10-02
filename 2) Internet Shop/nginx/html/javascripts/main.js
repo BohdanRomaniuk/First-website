@@ -24,6 +24,30 @@ angular.module('asusShop', [])
     console.log('Error: ' + error);
   });
   
+  // Add tovar to Bucket
+  $scope.addTovarToBucket = (tovarID) => {
+    $http.post('/server/addBucket/' + tovarID)
+    .success((data) => {
+      $scope.allTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+  
+  //Delete tovar from Bucket
+  $scope.deleteTovarFromBucket = (tovarID) => {
+    $http.delete('/server/deleteBucket/' + tovarID)
+    .success((data) => {
+      $scope.bucketTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+  
   // Delete a tovar
   $scope.deleteTovar = (tovarID) => {
 	var sure = confirm("Ви впевнені що хочете видалити цей товар?");

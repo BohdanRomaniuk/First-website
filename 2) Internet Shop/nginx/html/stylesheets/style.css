@@ -92,6 +92,12 @@ input[type="text"],[type="password"]
 	cursor: pointer;
 }
 
+.cancel
+{
+	background-color: #fd8383;
+    border: 1px solid #ab0606;
+}
+
 #status
 {
 	color: #80e004;

@@ -31,7 +31,7 @@
 		<h3>{{ tovar.tovar_name }}</h3>
 		<div class="post-text">
 			<a href="{{ tovar.image }}"><img src="{{ tovar.image }}" alt="{{ tovar.tovar_name }}" title="{{ tovar.tovar_name }}" style="max-width:400px; float: left;"/></a>
-			<button class="btn buy" style="float:left; color: green; display: none;" ng-click="deleteTovarFromBucket(tovar.tovar_id)">Скасувати замовлення</button> <div class="price">{{ tovar.price }} грн.</div>
+			<button class="btn buy cancel" style="float:left; color: black;" ng-click="deleteTovarFromBucket(tovar.bucket_id)">Скасувати замовлення</button> <div class="price">{{ tovar.price }} грн.</div>
 			{{ tovar.description }}
 		</div>
 	</div>

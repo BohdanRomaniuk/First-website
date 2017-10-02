@@ -133,7 +133,8 @@ router.get('/server/bucket', (req, res, next) => {
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-	const query = client.query('SELECT t.* FROM tovars AS t, buckets AS b WHERE b.tovar_id=t.tovar_id  ORDER BY t.tovar_id ASC;');
+	const data = {username: sess.username};
+	const query = client.query('SELECT b.bucket_id, t.* FROM tovars AS t, buckets AS b WHERE b.tovar_id=t.tovar_id AND b.username=($1) AND b.cancel=false ORDER BY t.tovar_id ASC;', [data.username]);
     query.on('row', (row) => {
       results.push(row);
     });
@@ -144,4 +145,51 @@ router.get('/server/bucket', (req, res, next) => {
 
   });
 });
+
+//ADD TOVAR TO BUCKET
+router.post('/server/addBucket/:tovar_id', (req, res, next) => {
+  sess=req.session;
+  const results = [];
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+	const data = {username: sess.username, id: req.params.tovar_id};
+    client.query('INSERT INTO buckets(username, tovar_id) VALUES($1, $2)', [data.username, data.id]);
+    var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
+    query.on('row', (row) => {
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
+//DELETE TOVAR FROM BUCKET
+router.delete('/server/deleteBucket/:bucket_id', (req, res, next) => {
+  sess=req.session;
+  const results = [];
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+	const data = {username: sess.username};
+    client.query('UPDATE buckets SET cancel=true WHERE bucket_id=($1);', [req.params.bucket_id]);
+    var query = client.query('SELECT b.bucket_id, t.* FROM tovars AS t, buckets AS b WHERE b.tovar_id=t.tovar_id AND b.username=($1) AND b.cancel=false ORDER BY t.tovar_id ASC;', [data.username]);
+    query.on('row', (row) => {
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
 module.exports = router;
