@@ -70,6 +70,11 @@ body
     padding: 4px;
 }
 
+#photo-list li
+{
+	display: inline;
+}
+
 h3
 {
 	border-bottom: 1px solid #CCCCCC;

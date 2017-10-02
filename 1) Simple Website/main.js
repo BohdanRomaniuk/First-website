@@ -22,7 +22,42 @@ function ChangeColorToGreen(element)
 	element.style.fontStyle = "normal";
 }
 
-function ShowPostTitle(container)
+function ChangePostsColor()
 {
-	alert(container.innerHTML);
+	var posts = document.getElementsByClassName('post-text');
+	for(i=0; i<posts.length; i++)
+	{
+		if(posts[i].style.color=='red')
+		{
+			posts[i].style.color='green';
+		}
+		else
+		{
+			posts[i].style.color='red';
+		}
+	}
+}
+
+var slideIndex = 1;
+ShowImages(slideIndex);
+
+function NextImage(step) {
+  ShowImages(slideIndex += step);
+}
+
+function ShowImages(step) {
+	var photos = document.getElementsByClassName("my-photo");
+	if (step > photos.length)
+	{
+		slideIndex = 1
+	}    
+	if (step < 1) 
+	{
+		slideIndex = photos.length
+	}
+	for (var i = 0; i < photos.length; i++) 
+	{
+		photos[i].style.display = "none";  
+	}
+	photos[slideIndex-1].style.display = "block";  
 }
