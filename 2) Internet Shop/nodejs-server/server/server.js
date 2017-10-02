@@ -121,8 +121,6 @@ router.get('/server/loggined', (req, res, next) => {
 	return res.json(false);
 });
 
-//BUY TOVAR
-
 //SELECT BUCKET TOVARS
 router.get('/server/bucket', (req, res, next) => {
 	sess=req.session;
@@ -135,6 +133,29 @@ router.get('/server/bucket', (req, res, next) => {
     }
 	const data = {username: sess.username};
 	const query = client.query('SELECT b.bucket_id, t.* FROM tovars AS t, buckets AS b WHERE b.tovar_id=t.tovar_id AND b.username=($1) AND b.cancel=false ORDER BY t.tovar_id ASC;', [data.username]);
+    query.on('row', (row) => {
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+
+  });
+});
+
+//SELECT CANCEL TOVARS
+router.get('/server/cancels', (req, res, next) => {
+	sess=req.session;
+	const results = [];
+	pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+	const data = {username: sess.username};
+	const query = client.query('SELECT b.bucket_id, t.* FROM tovars AS t, buckets AS b WHERE b.tovar_id=t.tovar_id AND b.username=($1) AND b.cancel=true ORDER BY t.tovar_id ASC;', [data.username]);
     query.on('row', (row) => {
       results.push(row);
     });
@@ -188,6 +209,25 @@ router.delete('/server/deleteBucket/:bucket_id', (req, res, next) => {
     query.on('end', () => {
       done();
       return res.json(results);
+    });
+  });
+});
+
+//ADD NEW TOVAR
+router.post('/server/add', (req, res, next) => {
+	var createdSuccesfully = false;
+	const data = {tovar_name: req.body.tovar_name, image_link: req.body.image_link, description: req.body.description, price: req.body.price};
+	pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+    const query = client.query('INSERT INTO tovars(tovar_name, image, description, price) VALUES($1,$2,$3,$4);', [data.tovar_name, data.image_link, data.description, data.price]);
+    createdSuccesfully = true;
+    query.on('end', () => {
+      done();
+      return res.json(createdSuccesfully);
     });
   });
 });

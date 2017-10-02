@@ -24,11 +24,44 @@ angular.module('asusShop', [])
     console.log('Error: ' + error);
   });
   
+  // Get all cancelTovars
+  $http.get('/server/cancels')
+  .success((data) => {
+    $scope.cancelTovars = data;
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
+  
   // Add tovar to Bucket
   $scope.addTovarToBucket = (tovarID) => {
     $http.post('/server/addBucket/' + tovarID)
     .success((data) => {
       $scope.allTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+  
+  // Add tovar
+  $scope.addTovar = () => {
+    $http.post('/server/add', $scope.formData)
+    .success((data) => {
+      $scope.formData = {};
+	  if(data==true)//Created succesfully
+	  {
+		document.getElementById('status').style.color = "#80e004";
+	    document.getElementById('status').innerHTML = "Товар успішно додано";
+	    setTimeout(function() {$('#status').fadeOut('fast');}, 5000);
+	  }
+	  else
+	  {
+	    document.getElementById('status').style.color = "red";
+	    document.getElementById('status').innerHTML = "Помилка під час додавання товару";
+	  }
       console.log(data);
     })
     .error((data) => {

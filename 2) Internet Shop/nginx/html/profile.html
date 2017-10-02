@@ -27,17 +27,26 @@
   </tbody>
 </table>
 <div id="main-container">
-	<div class="post-container"  style="display: grid;">
-		<h3>Поточні замовлення користувача []</h3>
+	<div class="post-container"  style="display: grid;background: #dcf9e1;">
+		<h3>Поточні замовлення користувача</h3>
+		<div class="post-container" ng-repeat="tovar in bucketTovars" style="display: grid;">
+		<h3>{{ tovar.tovar_name }}</h3>
 		<div class="post-text">
-			ляляля
+			<a href="{{ tovar.image }}"><img src="{{ tovar.image }}" alt="{{ tovar.tovar_name }}" title="{{ tovar.tovar_name }}" style="max-width:400px; float: left;"/></a>
+			<button class="btn buy cancel" style="float:left; color: black;" ng-click="deleteTovarFromBucket(tovar.bucket_id)">Скасувати замовлення</button> <div class="price">{{ tovar.price }} грн.</div>
+			{{ tovar.description }}
 		</div>
 	</div>
+	</div>
 	
-	<div class="post-container"  style="display: grid;">
-		<h3>Скасовані замовлення користувача []</h3>
+	<div class="post-container"  style="display: grid;background: #f9dcdc;">
+		<h3>Скасовані замовлення користувача</h3>
+		<div class="post-container" ng-repeat="tovar in cancelTovars" style="display: grid;">
+		<h3>{{ tovar.tovar_name }}</h3>
 		<div class="post-text">
-			ляляля
+			<a href="{{ tovar.image }}"><img src="{{ tovar.image }}" alt="{{ tovar.tovar_name }}" title="{{ tovar.tovar_name }}" style="max-width:400px; float: left;"/></a>
+			<div class="price">{{ tovar.price }} грн.</div>
+			{{ tovar.description }}
 		</div>
 	</div>
 </div>
