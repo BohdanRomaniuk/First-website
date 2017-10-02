@@ -32,8 +32,7 @@ body
 
 #navigation li a
 {
-	margin: 0 7px;
-	padding: 14px;
+	padding: 14px 10px;
 	text-transform: uppercase;
     text-decoration: none;
 	color: white;

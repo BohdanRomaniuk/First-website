@@ -4,8 +4,12 @@ const pg = require('pg');
 const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@localhost:5432/asus_shop';
 
+//USER SESSION!!!!!!!
+var sess;
+
 //SELECT TOVARS
 router.get('/server/index', (req, res, next) => {
+	sess=req.session;
 	const results = [];
 	pg.connect(connectionString, (err, client, done) => {
     if(err) {
@@ -13,7 +17,7 @@ router.get('/server/index', (req, res, next) => {
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-    const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+	const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
     query.on('row', (row) => {
       results.push(row);
     });
@@ -21,6 +25,7 @@ router.get('/server/index', (req, res, next) => {
       done();
       return res.json(results);
     });
+
   });
 });
 
@@ -48,7 +53,7 @@ router.delete('/server/index/:tovar_id', (req, res, next) => {
 
 //REGISTER NEW USER
 router.post('/server/register', (req, res, next) => {
-	const results = [];
+	var results = false;
 	const data = {username: req.body.username, userpassword: req.body.userpassword, userrole: 'simple'};
 	pg.connect(connectionString, (err, client, done) => {
     if(err) {
@@ -57,9 +62,9 @@ router.post('/server/register', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
     client.query('INSERT INTO users(username, userpassword, userrole) values($1, $2, $3)', [data.username, data.userpassword, data.userrole]);
-    const query = client.query('SELECT * FROM users ORDER BY username ASC');
+    const query = client.query('SELECT * FROM users WHERE username=($1) LIMIT 1', [data.username]);
     query.on('row', (row) => {
-      results.push(row);
+      results = true;
     });
     query.on('end', () => {
       done();
@@ -80,6 +85,10 @@ router.post('/server/login', (req, res, next) => {
     }
     const query = client.query('SELECT * FROM users WHERE username=($1) AND userpassword=($2) LIMIT 1', [data.username, data.userpassword]);
     query.on('row', (row) => {
+	//START SESSION
+	sess=req.session;
+	sess.username=req.body.username;
+	//START SESSION
       isLoggined = true;
     });
     query.on('end', () => {
@@ -89,4 +98,50 @@ router.post('/server/login', (req, res, next) => {
   });
 });
 
+//USER LOGOUT FORM
+router.get('/server/logout', (req, res, next) => {
+	req.session.destroy(function(err){
+	if(err){
+		console.log(err);
+	}
+	else
+	{
+		return res.json(true);
+	}
+  });
+});
+
+//CHECK IF USER LOGIN
+router.get('/server/loggined', (req, res, next) => {
+	sess=req.session;
+	if(sess.username)
+	{
+		return res.json(sess.username);
+	}
+	return res.json(false);
+});
+
+//BUY TOVAR
+
+//SELECT BUCKET TOVARS
+router.get('/server/bucket', (req, res, next) => {
+	sess=req.session;
+	const results = [];
+	pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+	const query = client.query('SELECT t.* FROM tovars AS t, buckets AS b WHERE b.tovar_id=t.tovar_id  ORDER BY t.tovar_id ASC;');
+    query.on('row', (row) => {
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+
+  });
+});
 module.exports = router;

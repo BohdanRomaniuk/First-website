@@ -6,6 +6,18 @@ CREATE TABLE tovars(
     price integer NOT NULL
 );
 
+CREATE TABLE buckets(
+    bucket_id SERIAL PRIMARY KEY,
+	username varchar(50) NOT NULL,
+    tovar_id integer NOT NULL,
+    cancel boolean NOT NULL DEFAULT FALSE
+)
+
+CREATE TABLE users(
+	username varchar(50) PRIMARY KEY,
+    userpassword varchar(50) NOT NULL,
+    userrole varchar(10) NOT NULL
+);
 
 INSERT INTO tovars(tovar_name, image, description, price) VALUES('Asus Zenbook UX510UX', '/images/ux510ux.png', 'Операційна система: Windows 10
 Діагональ: 15,6
@@ -57,12 +69,6 @@ INSERT INTO tovars(tovar_name, image, description, price) VALUES('ASUS K501LX', 
 SSD, ГБ: 128
 Оптичний привід: немає
 Графічний адаптер, обєм памяті: NVIDIA GeForce GTX 950M, 2 ГБ', 18250);
-
-CREATE TABLE users(
-	username varchar(50) PRIMARY KEY,
-    userpassword varchar(50) NOT NULL,
-    userrole varchar(10) NOT NULL
-);
 
 INSERT INTO users VALUES('admin','admin','admin');
 INSERT INTO users VALUES('user1','user1','simple');
