@@ -19,6 +19,14 @@ router.get('/server/index', (req, res, next) => {
     }
 	const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
     query.on('row', (row) => {
+	  if(sess.username)
+	  {
+	    row.buy = "unset";	 
+	  }
+	  else
+	  {
+	    row.buy = "none";
+	  }
       results.push(row);
     });
     query.on('end', () => {
@@ -85,11 +93,12 @@ router.post('/server/login', (req, res, next) => {
     }
     const query = client.query('SELECT * FROM users WHERE username=($1) AND userpassword=($2) LIMIT 1', [data.username, data.userpassword]);
     query.on('row', (row) => {
-	//START SESSION
-	sess=req.session;
-	sess.username=req.body.username;
-	//START SESSION
-      isLoggined = true;
+		//START SESSION
+		sess=req.session;
+		sess.username=req.body.username;
+		sess.userrole=row.userrole;
+		//START SESSION
+		isLoggined = true;
     });
     query.on('end', () => {
       done();
@@ -111,14 +120,27 @@ router.get('/server/logout', (req, res, next) => {
   });
 });
 
-//CHECK IF USER LOGIN
-router.get('/server/loggined', (req, res, next) => {
+//NAVIGATION MENU
+router.get('/server/navigation', (req, res, next) => {
 	sess=req.session;
+	const navelements = [];
+navelements.push({name: 'main', href: '/', text: 'Головна'});
 	if(sess.username)
 	{
-		return res.json(sess.username);
+		navelements.push({name: 'bucket', href: 'bucket.html', text: 'Корзина'});
+		navelements.push({name: 'profile', href: 'profile.html', text: 'Профіль ['+sess.username+']'});
+		if(sess.userrole=='admin')
+		{
+			navelements.push({name: 'admin', href: '/admin/', text: 'Керування сайтом'});
+		}
+		navelements.push({name: 'logout', href: '/logout.html', text: 'Вийти'});
 	}
-	return res.json(false);
+	else
+	{
+		navelements.push({name: 'login', href: 'login.html', text: 'Вхід'});
+		navelements.push({name: 'register', href: 'register.html', text: 'Реєстрація'});
+	}
+	return res.json(navelements);
 });
 
 //SELECT BUCKET TOVARS
@@ -181,6 +203,7 @@ router.post('/server/addBucket/:tovar_id', (req, res, next) => {
     client.query('INSERT INTO buckets(username, tovar_id) VALUES($1, $2)', [data.username, data.id]);
     var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
     query.on('row', (row) => {
+	  row.buy = "unset";	 
       results.push(row);
     });
     query.on('end', () => {

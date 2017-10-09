@@ -3,6 +3,17 @@ angular.module('asusShop', [])
   $scope.formData = {};
   $scope.allTovars = {};
   $scope.bucketTovars = {};
+  $scope.navigationElems = {};
+  
+  // Get all Navigation
+  $http.get('/server/navigation')
+  .success((data) => {
+    $scope.navigationElems = data;
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
   
   // Get all tovars
   $http.get('/server/index')
@@ -38,6 +49,7 @@ angular.module('asusShop', [])
   $scope.addTovarToBucket = (tovarID) => {
     $http.post('/server/addBucket/' + tovarID)
     .success((data) => {
+	  alert('Товар успішно додано в Корзину');
       $scope.allTovars = data;
       console.log(data);
     })
@@ -129,7 +141,7 @@ angular.module('asusShop', [])
 	  {
 	    document.getElementById('status').style.color = "#80e004";
 		document.getElementById('status').innerHTML = "Ви успішно увійшли! </br> Вас буде переадресовано на головну сторінку";
-	    setTimeout(function() { window.location.replace("/index.html"); }, 5000);
+	    setTimeout(function() { window.location.replace("/index.html"); }, 1000);
 	  }
 	  else
 	  {
@@ -142,40 +154,4 @@ angular.module('asusShop', [])
       console.log('Error: ' + error);
     });
   };
-  
-  
-  //Check if user loggined
-  $http.get('/server/loggined')
-  .success((data) => {
-		if(data)
-		{
-		    document.getElementById('bucket').style.display = 'unset';
-			document.getElementById('profile').style.display = 'unset';
-			document.getElementById('profile').innerHTML += ' ['+ data + ']';
-			if(data=='admin')
-			{
-				document.getElementById('add').style.display = 'unset';
-				var deleteButtons = document.getElementsByClassName("del");
-				for(i=0; i<deleteButtons.length; i++)
-				{
-					deleteButtons[i].style.display = 'unset';
-				}
-			}
-			document.getElementById('logout').style.display = 'unset';
-			var buyButtons = document.getElementsByClassName('buy');
-			for(i=0; i<buyButtons.length; i++)
-			{
-				buyButtons[i].style.display = 'unset';
-			}
-		}
-		else
-		{
-			document.getElementById('login').style.display = 'unset';
-			document.getElementById('register').style.display = 'unset';
-		}
-    console.log(data);
-  })
-  .error((error) => {
-    console.log('Error: ' + error);
-  });
 });

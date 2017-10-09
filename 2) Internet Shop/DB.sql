@@ -11,7 +11,7 @@ CREATE TABLE buckets(
 	username varchar(50) NOT NULL,
     tovar_id integer NOT NULL,
     cancel boolean NOT NULL DEFAULT FALSE
-)
+);
 
 CREATE TABLE users(
 	username varchar(50) PRIMARY KEY,
@@ -69,6 +69,32 @@ INSERT INTO tovars(tovar_name, image, description, price) VALUES('ASUS K501LX', 
 SSD, ГБ: 128
 Оптичний привід: немає
 Графічний адаптер, обєм памяті: NVIDIA GeForce GTX 950M, 2 ГБ', 18250);
+
+INSERT INTO tovars(tovar_name, image, description, price) VALUES('Asus Vivobook Pro 15 N580VD', '/images/n580vd.jpg', 'Операційна система: Windows 10
+Діагональ: 15,6
+Роздільна здатність: 1920x1080
+Процесор: Intel Core i7-7700HQ
+Частота, GHz: 3,8
+Кількість ядер процесора: 4
+Обсяг оперативної памяті, ГБ: 8
+Максимальний обсяг оперативної памяті, ГБ: 16
+Жорсткий диск, ГБ: 1000
+SSD, ГБ: немає
+Оптичний привід: немає
+Графічний адаптер, обєм памяті: NVIDIA GeForce GTX 1050, 4 ГБ', 27156);
+
+INSERT INTO tovars(tovar_name, image, description, price) VALUES('Asus Zenbook Pro UX550', '/images/ux550.jpg', 'Операційна система: Windows 10
+Діагональ: 15,6
+Роздільна здатність: 1920x1080
+Процесор: Intel Core i7-7700HQ
+Частота, GHz: 3,8
+Кількість ядер процесора: 4
+Обсяг оперативної памяті, ГБ: 16
+Максимальний обсяг оперативної памяті, ГБ: 16
+Жорсткий диск, ГБ: 1000
+SSD, ГБ: немає
+Оптичний привід: немає
+Графічний адаптер, обєм памяті: NVIDIA GeForce GTX 1050, 4 ГБ', 52855);
 
 INSERT INTO users VALUES('admin','admin','admin');
 INSERT INTO users VALUES('user1','user1','simple');

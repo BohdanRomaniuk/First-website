@@ -15,13 +15,7 @@
 			<div id="logo">Ноутбуки Asus</div>
 		</a>
         <ul id="navigation">
-          <li><a id="main" href="/" >Головна</a></li>
-          <li><a id="login" href="login.html" style="display: none;">Вхід</a></li>
-          <li><a id="register" href="register.html" style="display: none;">Реєстрація</a></li>
-		  <li><a id="bucket" href="bucket.html" style="display: none;">Корзина</a></li>
-		  <li><a id="profile" href="profile.html" style="display: none;">Профіль</a></li>
-		  <li><a id="add" href="add.html" style="display: none;color:red;">Додати товар</a></li>
-		  <li><a id="logout" href="logout.html" style="display: none;">Вийти</a></li>
+          <li ng-repeat="nav in navigationElems"><a id="{{ nav.name }}" href="{{ nav.href }}" >{{ nav.text }}</a></li>
 		</ul>
       </div>
       </td>
@@ -33,17 +27,17 @@
 		<h3>{{ tovar.tovar_name }} <button class="del cancel" ng-click="deleteTovar(tovar.tovar_id)" style="float:right;color:black;display:none;">X</button></h3>
 		<div class="post-text">
 			<a href="{{ tovar.image }}"><img src="{{ tovar.image }}" alt="{{ tovar.tovar_name }}" title="{{ tovar.tovar_name }}" style="max-width:400px; float: left;"/></a>
-			<button class="btn buy" style="float:left; color: green; display: none;" ng-click="addTovarToBucket(tovar.tovar_id)">Купити</button> <div class="price">{{ tovar.price }} грн.</div>
+			<button class="btn buy" style="float:left; color: green; display: {{ tovar.buy }};" ng-click="addTovarToBucket(tovar.tovar_id)">Купити</button> <div class="price">{{ tovar.price }} грн.</div>
 			{{ tovar.description }}
 		</div>
 	</div>
 </div>
+<script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
+<script src="javascripts/angular.min.js"></script>
+<script src="javascripts/main.js"></script>
 <script>
 	document.getElementById("main").className += "active";
 </script>
-	<script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
-    <script src="javascripts/angular.min.js"></script>
-    <script src="javascripts/main.js"></script>
 </body>
 </html>
 
