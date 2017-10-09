@@ -51,6 +51,19 @@ angular.module('asusShop', [])
     });
   };
   
+  // Delete action
+  $scope.deleteActionFromTovar = function(tovarID) {
+    $http.delete('../server/admin/deleteActionFromTovar/' + tovarID)
+    .success((data) => {
+	  alert('Акцію успішно скасовано!');
+      $scope.allTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+  
   // Delete a tovar
   $scope.deleteTovar = function(tovarID) {
 	var sure = confirm("Ви впевнені що хочете видалити цей товар?");

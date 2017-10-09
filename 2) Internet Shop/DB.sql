@@ -3,8 +3,7 @@ CREATE TABLE tovars(
     tovar_name varchar(50) NOT NULL,
     image varchar(255) NOT NULL,
     description text NOT NULL,
-    price integer NOT NULL,
-	action integer DEFAULT 0
+    price integer NOT NULL
 );
 
 CREATE TABLE buckets(

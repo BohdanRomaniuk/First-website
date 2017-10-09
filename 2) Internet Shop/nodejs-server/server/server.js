@@ -217,7 +217,7 @@ router.get('/server/admin/index', (req, res, next) => {
 	sess=req.session;
 	if(sess.userrole=='admin')
 	{
-		const results = [];
+	const results = [];
 	pg.connect(connectionString, (err, client, done) => {
     if(err) {
       done();
@@ -227,6 +227,7 @@ router.get('/server/admin/index', (req, res, next) => {
 	const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
     query.on('row', (row) => {
 	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
+	  row.del_action = (row.action==0)?"none":"unset";
       results.push(row);
     });
     query.on('end', () => {
@@ -272,6 +273,31 @@ router.post('/server/admin/addActionToTovar/:tovar_id&:action_amount', (req, res
     var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
     query.on('row', (row) => {
 	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
+	  row.del_action = (row.action==0)?"none":"unset";
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
+//DELETE ACTION FROM TOVAR
+router.delete('/server/admin/deleteActionFromTovar/:tovar_id', (req, res, next) => {
+  const results = [];
+  const id = req.params.tovar_id;
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+    client.query('UPDATE tovars SET action=0 WHERE tovar_id=($1)', [id]);
+    var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
+    query.on('row', (row) => {
+	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
+	  row.del_action = (row.action==0)?"none":"unset";
       results.push(row);
     });
     query.on('end', () => {
@@ -295,6 +321,7 @@ router.delete('/server/admin/index/:tovar_id', (req, res, next) => {
     var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
     query.on('row', (row) => {
 	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
+	  row.del_action = (row.action==0)?"none":"unset";
       results.push(row);
     });
     query.on('end', () => {
