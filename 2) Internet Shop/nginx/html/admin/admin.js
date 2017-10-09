@@ -15,7 +15,7 @@ angular.module('asusShop', [])
   });
   
   // Add tovar
-  $scope.addTovar = () => {
+  $scope.addTovar = function () {
     $http.post('../server/admin/add', $scope.formData)
     .success((data) => {
       $scope.formData = {};
@@ -37,8 +37,22 @@ angular.module('asusShop', [])
     });
   };
   
+  // Add action
+  $scope.addActionToTovar = function(tovarID) {
+	var amountOfAction = prompt("Введіть розмір знижки:", "10");
+    $http.post('../server/admin/addActionToTovar/' + tovarID +'&' + amountOfAction)
+    .success((data) => {
+	  alert('Акцію успішно додано!');
+      $scope.allTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+  
   // Delete a tovar
-  $scope.deleteTovar = (tovarID) => {
+  $scope.deleteTovar = function(tovarID) {
 	var sure = confirm("Ви впевнені що хочете видалити цей товар?");
 	if(sure==true)
 	{

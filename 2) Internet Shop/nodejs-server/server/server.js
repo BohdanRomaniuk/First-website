@@ -19,14 +19,8 @@ router.get('/server/index', (req, res, next) => {
     }
 	const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
     query.on('row', (row) => {
-	  if(sess.username)
-	  {
-	    row.buy = "unset";	 
-	  }
-	  else
-	  {
-	    row.buy = "none";
-	  }
+	  row.buy = (sess.username)?"unset":"none";	
+	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
       results.push(row);
     });
     query.on('end', () => {
@@ -181,7 +175,8 @@ router.post('/server/addBucket/:tovar_id', (req, res, next) => {
     client.query('INSERT INTO buckets(username, tovar_id) VALUES($1, $2)', [data.username, data.id]);
     var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
     query.on('row', (row) => {
-	  row.buy = "unset";	 
+	  row.buy = "unset";
+	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
       results.push(row);
     });
     query.on('end', () => {
@@ -231,6 +226,7 @@ router.get('/server/admin/index', (req, res, next) => {
     }
 	const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
     query.on('row', (row) => {
+	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
       results.push(row);
     });
     query.on('end', () => {
@@ -261,6 +257,30 @@ router.post('/server/admin/add', (req, res, next) => {
   });
 });
 
+//ADD ACTION TO TOVAR
+router.post('/server/admin/addActionToTovar/:tovar_id&:action_amount', (req, res, next) => {
+  sess=req.session;
+  const results = [];
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+	const data = { id: req.params.tovar_id, amount: req.params.action_amount};
+    client.query('UPDATE tovars SET action=($1) WHERE tovar_id=($2)', [data.amount, data.id]);
+    var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
+    query.on('row', (row) => {
+	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+  });
+});
+
 //DELETE TOVAR
 router.delete('/server/admin/index/:tovar_id', (req, res, next) => {
   const results = [];
@@ -274,6 +294,7 @@ router.delete('/server/admin/index/:tovar_id', (req, res, next) => {
     client.query('DELETE FROM tovars WHERE tovar_id=($1)', [id]);
     var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
     query.on('row', (row) => {
+	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
       results.push(row);
     });
     query.on('end', () => {

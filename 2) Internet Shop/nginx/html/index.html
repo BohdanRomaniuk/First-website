@@ -24,7 +24,7 @@
 </table>
 <div id="main-container">
 	<div class="post-container" ng-repeat="tovar in allTovars" style="display: grid;">
-		<h3>{{ tovar.tovar_name }} <button class="del cancel" ng-click="deleteTovar(tovar.tovar_id)" style="float:right;color:black;display:none;">X</button></h3>
+		<h3>{{ tovar.tovar_name }} <div class="action">{{ tovar.action }}</div></h3>
 		<div class="post-text">
 			<a href="{{ tovar.image }}"><img src="{{ tovar.image }}" alt="{{ tovar.tovar_name }}" title="{{ tovar.tovar_name }}" style="max-width:400px; float: left;"/></a>
 			<button class="btn buy" style="float:left; color: green; display: {{ tovar.buy }};" ng-click="addTovarToBucket(tovar.tovar_id)">Купити</button> <div class="price">{{ tovar.price }} грн.</div>

@@ -27,7 +27,7 @@
 </table>
 <div id="main-container">
 	<div class="post-container" ng-repeat="tovar in allTovars" style="display: grid;">
-		<h3>{{ tovar.tovar_name }} <div style="float:right;"><button class="btn buy" style="color: green; margin-right: 10px;" ng-click="addActionToTovar(tovar.tovar_id)">Встановити акцію</button> <button class="btn cancel" ng-click="deleteTovar(tovar.tovar_id)" style="color:black;">X</button></div></h3>
+		<h3>{{ tovar.tovar_name }} <div style="float:right;"><button class="btn buy" style="color: green; margin-right: 10px;" ng-click="addActionToTovar(tovar.tovar_id)">Встановити акцію</button> <button class="btn cancel" ng-click="deleteTovar(tovar.tovar_id)" style="color:black;">X</button></div> <div class="action">{{ tovar.action }}</div></h3>
 		<div class="post-text">
 			<a href="{{ tovar.image }}"><img src="{{ tovar.image }}" alt="{{ tovar.tovar_name }}" title="{{ tovar.tovar_name }}" style="max-width:400px; float: left;"/></a>
 			<div class="price">{{ tovar.price }} грн.</div>
