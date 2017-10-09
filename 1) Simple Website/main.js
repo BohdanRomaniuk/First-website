@@ -38,26 +38,44 @@ function ChangePostsColor()
 	}
 }
 
-var slideIndex = 1;
-ShowImages(slideIndex);
-
-function NextImage(step) {
-  ShowImages(slideIndex += step);
+function ChangeOperand(newOperand)
+{
+	var operand = document.getElementById("operand");
+	operand.innerHTML = newOperand;
 }
-
-function ShowImages(step) {
-	var photos = document.getElementsByClassName("my-photo");
-	if (step > photos.length)
+function Calculate()
+{
+	var firstOperand = document.getElementById("first").value;
+	var secondOperand = document.getElementById("second").value;
+	
+	var operation;
+	var allOperation = document.getElementsByName("operation");
+	for(var i=0; i<allOperation.length; ++i)
 	{
-		slideIndex = 1
-	}    
-	if (step < 1) 
-	{
-		slideIndex = photos.length
+		if(allOperation[i].checked)
+		{
+			operation = allOperation[i].value;
+			break;
+		}
 	}
-	for (var i = 0; i < photos.length; i++) 
+	
+	firstOperand = parseFloat(firstOperand);
+	secondOperand = parseFloat(secondOperand);
+	var result = 0;
+	switch(operation)
 	{
-		photos[i].style.display = "none";  
+		case "plus":
+			result = firstOperand + secondOperand;
+			break;
+		case "minus":
+			result = firstOperand - secondOperand;
+			break;
+		case "mult":
+			result = firstOperand * secondOperand;
+			break;
+		case "div":
+			result = firstOperand / secondOperand;
+			break;
 	}
-	photos[slideIndex-1].style.display = "block";  
+	document.getElementById("result").value = result;
 }

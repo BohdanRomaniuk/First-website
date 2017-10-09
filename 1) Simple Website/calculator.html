@@ -1,0 +1,52 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="utf-8">	
+<title>Мої фотографії - Романюк Богдан</title>
+<link rel="stylesheet" type="text/css" href="style.css"/>
+</head>
+<body>
+<table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
+  <tbody>
+    <tr>
+      <td height="39" class="list" align="center">
+      <div style="max-width:1000px;">
+		<a href="index.html">
+			<div id="logo" onmouseover="ChangeColorToBlue(this);" onmouseout="ChangeColorToGreen(this);">Блог Романюка Богдана</div>
+		</a>
+		<ul id="navigation">
+          <li><a id="main" href="index.html">Головна</a></li>
+          <li><a id="about" href="about.html">Про мене</a></li>
+		  <li><a id="calculator" href="calculator.html">Калькулятор</a></li>
+          <li><a id="contacts" href="contacts.html">Мої контакти</li>
+        </ul>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div id="main-container">
+	<div class="post-container">
+		<h3>Калькулятор</h3>
+		<div class="post-text" align="center">
+		    <input type="text" id="first" name="first" placeholder="Перший операнд"/>
+			<span id="operand">+</span>
+		    <input type="text" id="second" name="second" placeholder="Другий операнд"/>
+			<span>=</span>
+			<input type="text" id="result" name="result" placeholder="Результат"/>
+			<input type="button" name="submit" value="Порахувати" onclick="Calculate()"/>
+			<ul>
+				<input type="radio" name="operation" value="plus" checked="checked" onclick="ChangeOperand('+')">Додавання</input>
+				<input type="radio" name="operation" value="minus" onclick="ChangeOperand('-')">Віднімання</input>
+				<input type="radio" name="operation" value="mult" onclick="ChangeOperand('*')">Множення</input>
+				<input type="radio" name="operation" value="div" onclick="ChangeOperand('/')">Ділення</input>
+			</ul>
+		</div>
+	</div>
+</div>
+<script>
+	document.getElementById("calculator").className += "active";
+</script>
+<script type="text/javascript" src="main.js"></script>
+</body>
+</html>
