@@ -37,28 +37,6 @@ router.get('/server/index', (req, res, next) => {
   });
 });
 
-//DELETE TOVAR
-router.delete('/server/index/:tovar_id', (req, res, next) => {
-  const results = [];
-  const id = req.params.tovar_id;
-  pg.connect(connectionString, (err, client, done) => {
-    if(err) {
-      done();
-      console.log(err);
-      return res.status(500).json({success: false, data: err});
-    }
-    client.query('DELETE FROM tovars WHERE tovar_id=($1)', [id]);
-    var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
-    query.on('row', (row) => {
-      results.push(row);
-    });
-    query.on('end', () => {
-      done();
-      return res.json(results);
-    });
-  });
-});
-
 //REGISTER NEW USER
 router.post('/server/register', (req, res, next) => {
 	var results = false;
@@ -236,8 +214,36 @@ router.delete('/server/deleteBucket/:bucket_id', (req, res, next) => {
   });
 });
 
+//#
+//#####-----------------[ADMIN PART]
+//#
+//SELECT TOVARS ADMIN PAGE
+router.get('/server/admin/index', (req, res, next) => {
+	sess=req.session;
+	if(sess.userrole=='admin')
+	{
+		const results = [];
+	pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+	const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+    query.on('row', (row) => {
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+
+  });
+ }	
+});
+
 //ADD NEW TOVAR
-router.post('/server/add', (req, res, next) => {
+router.post('/server/admin/add', (req, res, next) => {
 	var createdSuccesfully = false;
 	const data = {tovar_name: req.body.tovar_name, image_link: req.body.image_link, description: req.body.description, price: req.body.price};
 	pg.connect(connectionString, (err, client, done) => {
@@ -251,6 +257,28 @@ router.post('/server/add', (req, res, next) => {
     query.on('end', () => {
       done();
       return res.json(createdSuccesfully);
+    });
+  });
+});
+
+//DELETE TOVAR
+router.delete('/server/admin/index/:tovar_id', (req, res, next) => {
+  const results = [];
+  const id = req.params.tovar_id;
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+    client.query('DELETE FROM tovars WHERE tovar_id=($1)', [id]);
+    var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
+    query.on('row', (row) => {
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
     });
   });
 });
