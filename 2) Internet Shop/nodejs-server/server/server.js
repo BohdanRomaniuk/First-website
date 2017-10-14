@@ -17,9 +17,19 @@ router.get('/server/index', (req, res, next) => {
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-	const query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+
+	var query;
+	if(sess.username)
+	{
+	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username = $1 AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY t.tovar_id ASC;', [sess.username]);
+	}
+	else
+	{
+	  query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+	}
     query.on('row', (row) => {
-	  row.buy = (sess.username)?"unset":"none";	
+	  row.cancel = (sess.username && row.username==sess.username && !row.cancel)?"unset":"none";
+	  row.buy = (sess.username && row.cancel=="none")?"unset":"none";
 	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
       results.push(row);
     });
@@ -28,6 +38,40 @@ router.get('/server/index', (req, res, next) => {
       return res.json(results);
     });
 
+  });
+});
+
+//DELETE TOVAR FROM BUCKET ON INDEX PAGE
+router.delete('/server/index/:bucket_id', (req, res, next) => {
+  sess=req.session;
+  const results = [];
+  pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+	const data = {username: sess.username};
+    client.query('UPDATE buckets SET cancel=true WHERE tovar_id=($1) AND username=($2) AND cancel=false;', [req.params.bucket_id, sess.username]);
+    var query;
+	if(sess.username)
+	{
+	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username = $1 AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY t.tovar_id ASC;', [sess.username]);
+	}
+	else
+	{
+	  query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+	}
+	query.on('row', (row) => {
+      row.cancel = (sess.username && row.username==sess.username && !row.cancel)?"unset":"none";
+	  row.buy = (sess.username && row.cancel=="none")?"unset":"none";
+	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
+      results.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
   });
 });
 
@@ -173,9 +217,18 @@ router.post('/server/addBucket/:tovar_id', (req, res, next) => {
     }
 	const data = {username: sess.username, id: req.params.tovar_id};
     client.query('INSERT INTO buckets(username, tovar_id) VALUES($1, $2)', [data.username, data.id]);
-    var query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC');
+    var query;
+	if(sess.username)
+	{
+	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username = $1 AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY t.tovar_id ASC;', [sess.username]);
+	}
+	else
+	{
+	  query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+	}
     query.on('row', (row) => {
-	  row.buy = "unset";
+	  row.cancel = (sess.username && row.username==sess.username && !row.cancel)?"unset":"none";
+	  row.buy = (sess.username && row.cancel=="none")?"unset":"none";
 	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
       results.push(row);
     });

@@ -29,7 +29,18 @@ app.controller('indexController', ($scope, $http) => {
   $scope.addTovarToBucket = (tovarID) => {
     $http.post('/server/addBucket/' + tovarID)
     .success((data) => {
-	  alert('Товар успішно додано в Корзину');
+      $scope.allTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+  
+  //Delete tovar from Bucket
+  $scope.deleteTovarFromBucket = (tovarID) => {
+    $http.delete('/server/index/' + tovarID)
+    .success((data) => {
       $scope.allTovars = data;
       console.log(data);
     })
