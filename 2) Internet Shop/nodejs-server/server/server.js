@@ -62,8 +62,32 @@ router.get('/server/index/:page_number&:order_type', (req, res, next) => {
   });
 });
 
+//PAGES!!!
+router.get('/server/pages', (req, res, next) => {
+	sess=req.session;
+	const results = [];
+	pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+
+	var query = client.query('SELECT * FROM tovars;');
+	var num =0;
+	query.on('row', (row) => {
+      results.push({number: ++num});
+    });
+    query.on('end', () => {
+      done();
+      return res.json(results);
+    });
+
+  });
+});
+
 //DELETE TOVAR FROM BUCKET ON INDEX PAGE
-router.delete('/server/index/:bucket_id', (req, res, next) => {
+router.delete('/server/index/:bucket_id&:page_number&:order_type', (req, res, next) => {
   sess=req.session;
   const results = [];
   pg.connect(connectionString, (err, client, done) => {
@@ -74,14 +98,35 @@ router.delete('/server/index/:bucket_id', (req, res, next) => {
     }
 	const data = {username: sess.username};
     client.query('UPDATE buckets SET cancel=true WHERE tovar_id=($1) AND username=($2) AND cancel=false;', [req.params.bucket_id, sess.username]);
-    var query;
+    var per_page = 3;
+	var limit_from = req.params.page_number*per_page-per_page;
+	
+	var order_type = req.params.order_type;
+	var ordering = "t.price ASC";
+	switch(order_type)
+	{
+		case "price_asc":
+			ordering = "t.price ASC";
+			break;
+		case "price_dsc":
+			ordering = "t.price DESC";
+			break;
+		case "action_asc":
+			ordering = "t.action ASC";
+			break;
+		case "action_dsc":
+			ordering = "t.action DESC";
+			break;
+	}
+	
+	var query;
 	if(sess.username)
 	{
-	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username = $1 AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY t.tovar_id ASC;', [sess.username]);
+	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username =($1) AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY ' + ordering + ' LIMIT ($2) OFFSET ($3);', [sess.username, per_page, limit_from]);
 	}
 	else
 	{
-	  query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+	  query = client.query('SELECT t.* FROM tovars AS t ORDER BY ' + ordering + ' LIMIT ($1) OFFSET ($2);',[per_page, limit_from]);
 	}
 	query.on('row', (row) => {
       row.cancel = (sess.username && row.username==sess.username && !row.cancel)?"unset":"none";
@@ -227,7 +272,7 @@ router.get('/server/cancels', (req, res, next) => {
 });
 
 //ADD TOVAR TO BUCKET
-router.post('/server/addBucket/:tovar_id', (req, res, next) => {
+router.post('/server/addBucket/:tovar_id&:page_number&:order_type', (req, res, next) => {
   sess=req.session;
   const results = [];
   pg.connect(connectionString, (err, client, done) => {
@@ -238,14 +283,35 @@ router.post('/server/addBucket/:tovar_id', (req, res, next) => {
     }
 	const data = {username: sess.username, id: req.params.tovar_id};
     client.query('INSERT INTO buckets(username, tovar_id) VALUES($1, $2)', [data.username, data.id]);
-    var query;
+    var per_page = 3;
+	var limit_from = req.params.page_number*per_page-per_page;
+	
+	var order_type = req.params.order_type;
+	var ordering = "t.price ASC";
+	switch(order_type)
+	{
+		case "price_asc":
+			ordering = "t.price ASC";
+			break;
+		case "price_dsc":
+			ordering = "t.price DESC";
+			break;
+		case "action_asc":
+			ordering = "t.action ASC";
+			break;
+		case "action_dsc":
+			ordering = "t.action DESC";
+			break;
+	}
+	
+	var query;
 	if(sess.username)
 	{
-	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username = $1 AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY t.tovar_id ASC;', [sess.username]);
+	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username =($1) AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY ' + ordering + ' LIMIT ($2) OFFSET ($3);', [sess.username, per_page, limit_from]);
 	}
 	else
 	{
-	  query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+	  query = client.query('SELECT t.* FROM tovars AS t ORDER BY ' + ordering + ' LIMIT ($1) OFFSET ($2);',[per_page, limit_from]);
 	}
     query.on('row', (row) => {
 	  row.cancel = (sess.username && row.username==sess.username && !row.cancel)?"unset":"none";

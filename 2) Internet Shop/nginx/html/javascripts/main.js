@@ -3,6 +3,7 @@ app = angular.module('asusShop', []);
 app.controller('indexController', ($scope, $http) => {
   $scope.navigationElems = {};
   $scope.allTovars = {};
+  $scope.pages = {};
   $scope.main = { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
   $scope.ordervalue = "price_asc";
   
@@ -26,6 +27,16 @@ app.controller('indexController', ($scope, $http) => {
     console.log('Error: ' + error);
   });
   
+  //Get pages
+  $http.get('/server/pages')
+  .success((data) => {
+    $scope.pages = data;
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
+  
   // Get tovars by special order
   $scope.getTovars = (page, order) => {
     $http.get('/server/index/'+ page +'&' + order)
@@ -39,8 +50,8 @@ app.controller('indexController', ($scope, $http) => {
   };
   
   // Add tovar to Bucket
-  $scope.addTovarToBucket = (tovarID) => {
-    $http.post('/server/addBucket/' + tovarID)
+  $scope.addTovarToBucket = (tovarID, pageNumber, order) => {
+    $http.post('/server/addBucket/' + tovarID + '&' + pageNumber + '&' + order)
     .success((data) => {
       $scope.allTovars = data;
       console.log(data);
@@ -51,8 +62,8 @@ app.controller('indexController', ($scope, $http) => {
   };
   
   //Delete tovar from Bucket
-  $scope.deleteTovarFromBucket = (tovarID) => {
-    $http.delete('/server/index/' + tovarID)
+  $scope.deleteTovarFromBucket = (tovarID, pageNumber, order) => {
+    $http.delete('/server/index/' + tovarID + '&' + pageNumber + '&' + order)
     .success((data) => {
       $scope.allTovars = data;
       console.log(data);
