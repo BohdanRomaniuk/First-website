@@ -1,9 +1,9 @@
-angular.module('asusShop', [])
-.controller('mainController', ($scope, $http) => {
-  $scope.formData = {};
-  $scope.allTovars = {};
-  $scope.bucketTovars = {};
+app = angular.module('asusShop', []);   
+
+app.controller('indexController', ($scope, $http) => {
   $scope.navigationElems = {};
+  $scope.allTovars = {};
+  $scope.main = { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
   
   // Get all Navigation
   $http.get('/server/navigation')
@@ -19,6 +19,74 @@ angular.module('asusShop', [])
   $http.get('/server/index')
   .success((data) => {
     $scope.allTovars = data;
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
+  
+  // Add tovar to Bucket
+  $scope.addTovarToBucket = (tovarID) => {
+    $http.post('/server/addBucket/' + tovarID)
+    .success((data) => {
+	  alert('Товар успішно додано в Корзину');
+      $scope.allTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+});
+
+app.controller('bucketController', ($scope, $http) => {
+  $scope.navigationElems = {};
+  $scope.bucketTovars = {};
+  $scope.bucket = { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
+  
+  // Get all Navigation
+  $http.get('/server/navigation')
+  .success((data) => {
+    $scope.navigationElems = data;
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
+  
+  // Get all bucketTovars
+  $http.get('/server/bucket')
+  .success((data) => {
+    $scope.bucketTovars = data;
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
+  
+  //Delete tovar from Bucket
+  $scope.deleteTovarFromBucket = (tovarID) => {
+    $http.delete('/server/deleteBucket/' + tovarID)
+    .success((data) => {
+      $scope.bucketTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
+});
+
+app.controller('profileController', ($scope, $http) => {
+  $scope.navigationElems = {};
+  $scope.allTovars = {};
+  $scope.bucketTovars = {};
+  $scope.profile = { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
+  
+  // Get all Navigation
+  $http.get('/server/navigation')
+  .success((data) => {
+    $scope.navigationElems = data;
     console.log(data);
   })
   .error((error) => {
@@ -45,42 +113,6 @@ angular.module('asusShop', [])
     console.log('Error: ' + error);
   });
   
-  // Add tovar to Bucket
-  $scope.addTovarToBucket = (tovarID) => {
-    $http.post('/server/addBucket/' + tovarID)
-    .success((data) => {
-	  alert('Товар успішно додано в Корзину');
-      $scope.allTovars = data;
-      console.log(data);
-    })
-    .error((data) => {
-      console.log('Error: ' + data);
-    });
-  };
-  
-  // Add tovar
-  $scope.addTovar = () => {
-    $http.post('/server/add', $scope.formData)
-    .success((data) => {
-      $scope.formData = {};
-	  if(data==true)//Created succesfully
-	  {
-		document.getElementById('status').style.color = "#80e004";
-	    document.getElementById('status').innerHTML = "Товар успішно додано";
-	    setTimeout(function() {$('#status').fadeOut('fast');}, 5000);
-	  }
-	  else
-	  {
-	    document.getElementById('status').style.color = "red";
-	    document.getElementById('status').innerHTML = "Помилка під час додавання товару";
-	  }
-      console.log(data);
-    })
-    .error((data) => {
-      console.log('Error: ' + data);
-    });
-  };
-  
   //Delete tovar from Bucket
   $scope.deleteTovarFromBucket = (tovarID) => {
     $http.delete('/server/deleteBucket/' + tovarID)
@@ -92,45 +124,22 @@ angular.module('asusShop', [])
       console.log('Error: ' + data);
     });
   };
+});
+
+app.controller('loginController', ($scope, $http) => {
+  $scope.navigationElems = {};
+  $scope.formData = {};
+  $scope.login = { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
   
-  // Delete a tovar
-  $scope.deleteTovar = (tovarID) => {
-	var sure = confirm("Ви впевнені що хочете видалити цей товар?");
-	if(sure==true)
-	{
-	  $http.delete('/server/index/' + tovarID)
-		.success((data) => {
-		$scope.allTovars = data;
-		console.log(data);
-      })
-      .error((data) => {
-		console.log('Error: ' + data);
-      });
-	}
-  };
-  
-  // Create a new user
-  $scope.createUser = () => {
-    $http.post('/server/register', $scope.formData)
-    .success((data) => {
-      $scope.formData = {};
-	  if(data==true)//Registered succesfully
-	  {
-		document.getElementById('status').style.color = "#80e004";
-	    document.getElementById('status').innerHTML = "Ваш профіль успішно створено! </br> Увійдіть на сайт використовуючи свій логін та пароль";
-	    setTimeout(function() {$('#status').fadeOut('fast');}, 5000);
-	  }
-	  else
-	  {
-	    document.getElementById('status').style.color = "red";
-	    document.getElementById('status').innerHTML = "Помилка під час реєстрації";
-	  }
-      console.log(data);
-    })
-    .error((error) => {
-      console.log('Error: ' + error);
-    });
-  };
+  // Get all Navigation
+  $http.get('/server/navigation')
+  .success((data) => {
+    $scope.navigationElems = data;
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
   
   // Login user
   $scope.loginUser = () => {
@@ -147,6 +156,50 @@ angular.module('asusShop', [])
 	  {
 	    document.getElementById('status').style.color = "red";
 		document.getElementById('status').innerHTML = "Такий користувач не існує!</br>Можливо ви помилилися при вводі паролю чи імені користувача";
+	  }
+      console.log(data);
+    })
+    .error((error) => {
+      console.log('Error: ' + error);
+    });
+  };
+});
+
+app.controller('registerController', ($scope, $http) => {
+  $scope.navigationElems = {};
+  $scope.formData = {};
+  $scope.register= { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
+  
+  // Get all Navigation
+  $http.get('/server/navigation')
+  .success((data) => {
+    $scope.navigationElems = data;
+	$scope.register = 
+	{
+		"color" : "#83e407",
+		"border-bottom" : "4px solid #81e407"
+	}
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
+  
+  // Register a new user
+  $scope.createUser = () => {
+    $http.post('/server/register', $scope.formData)
+    .success((data) => {
+      $scope.formData = {};
+	  if(data==true)//Registered succesfully
+	  {
+		document.getElementById('status').style.color = "#80e004";
+	    document.getElementById('status').innerHTML = "Ваш профіль успішно створено! </br> Увійдіть на сайт використовуючи свій логін та пароль";
+	    setTimeout(function() {$('#status').fadeOut('fast');}, 5000);
+	  }
+	  else
+	  {
+	    document.getElementById('status').style.color = "red";
+	    document.getElementById('status').innerHTML = "Помилка під час реєстрації";
 	  }
       console.log(data);
     })

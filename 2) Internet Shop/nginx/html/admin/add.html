@@ -40,7 +40,12 @@
 				<p>
 					<label>Посилання на картинку:</label>
 					</br>
-					<input type="text" name="link" placeholder="Напр /images/x23.jpg" style="width: 200px;" ng-model="formData.image_link" required="required"/>
+					<!--<input type="text" name="link" placeholder="Напр /images/x23.jpg" style="width: 200px;" ng-model="formData.image_link" required="required"/>-->
+					<input type="file" ngf-select ng-model="up.file" name="file" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB" />
+					<img style="width:100px;" ng-show="!!up.file" ngf-thumbnail="up.file || '/thumb.jpg'"/>
+            <i ng-show="up.upload_form.file.$error.required">*required</i><br>
+            <i ng-show="up.upload_form.file.$error.maxSize">File too large 
+            {{up.file.size / 1000000|number:1}}MB: max 20M</i>
 				</p>
 				<p>
 					<label>Опис товару:</label>
@@ -60,6 +65,8 @@
 </div>
 <script src="../javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
 <script src="../javascripts/angular.min.js"></script>
+<script src="../javascripts/ng-file-upload.min.js"></script>
+<script src="../javascripts/ng-file-upload-shim.min.js"></script>
 <script src="admin.js"></script>
 <script>
 	document.getElementById("add").className += "active";

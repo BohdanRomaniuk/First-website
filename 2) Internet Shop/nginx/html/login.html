@@ -5,7 +5,7 @@
 	<title>Ноутбуки Asus - Вхід користувача</title>
 	<link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
 </head>
-<body ng-controller="mainController">
+<body ng-controller="loginController">
 <table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
   <tbody>
     <tr>
@@ -15,7 +15,7 @@
 			<div id="logo">Ноутбуки Asus</div>
 		</a>
         <ul id="navigation">
-          <li ng-repeat="nav in navigationElems"><a id="{{ nav.name }}" href="{{ nav.href }}" >{{ nav.text }}</a></li>
+          <li ng-repeat="nav in navigationElems"><a id="{{ nav.name }}" href="{{ nav.href }}" ng-style="{{ nav.name }}">{{ nav.text }}</a></li>
 		</ul>
       </div>
       </td>
@@ -45,12 +45,9 @@
 		</div>
 	</div>
 </div>
-<script>
-	document.getElementById("login").className += "active";
-</script>
-	<script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
-    <script src="javascripts/angular.min.js"></script>
-    <script src="javascripts/main.js"></script>
+<script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
+<script src="javascripts/angular.min.js"></script>
+<script src="javascripts/main.js"></script>
 </body>
 </html>
 

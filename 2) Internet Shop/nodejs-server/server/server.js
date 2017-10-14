@@ -249,7 +249,8 @@ router.post('/server/admin/add', (req, res, next) => {
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-    const query = client.query('INSERT INTO tovars(tovar_name, image, description, price) VALUES($1,$2,$3,$4);', [data.tovar_name, data.image_link, data.description, data.price]);
+	console.log(data.image_link);
+    //const query = client.query('INSERT INTO tovars(tovar_name, image, description, price) VALUES($1,$2,$3,$4);', [data.tovar_name, data.image_link, data.description, data.price]);
     createdSuccesfully = true;
     query.on('end', () => {
       done();
