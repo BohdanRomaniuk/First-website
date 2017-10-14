@@ -4,6 +4,7 @@ app.controller('indexController', ($scope, $http) => {
   $scope.navigationElems = {};
   $scope.allTovars = {};
   $scope.main = { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
+  $scope.ordervalue = "price_asc";
   
   // Get all Navigation
   $http.get('/server/navigation')
@@ -16,7 +17,7 @@ app.controller('indexController', ($scope, $http) => {
   });
   
   // Get all tovars
-  $http.get('/server/index')
+  $http.get('/server/index/1&price_asc')
   .success((data) => {
     $scope.allTovars = data;
     console.log(data);
@@ -24,6 +25,18 @@ app.controller('indexController', ($scope, $http) => {
   .error((error) => {
     console.log('Error: ' + error);
   });
+  
+  // Get tovars by special order
+  $scope.getTovars = (page, order) => {
+    $http.get('/server/index/'+ page +'&' + order)
+    .success((data) => {
+      $scope.allTovars = data;
+      console.log(data);
+    })
+    .error((data) => {
+      console.log('Error: ' + data);
+    });
+  };
   
   // Add tovar to Bucket
   $scope.addTovarToBucket = (tovarID) => {

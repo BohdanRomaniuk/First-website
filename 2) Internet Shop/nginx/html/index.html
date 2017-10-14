@@ -23,6 +23,15 @@
   </tbody>
 </table>
 <div id="main-container">
+	<div class="post-container">
+	Сортувати: 
+	<select ng-model="ordervalue" ng-change="getTovars(1, ordervalue);">
+		<option value="price_asc" >за зростанням ціни</option>
+		<option value="price_dsc">за спаданням ціни</option>
+		<option value="action_asc">за зростання акційної знижки</option>
+		<option value="action_dsc">за спаданням акційної знижки</option>
+	</select>
+	</div>
 	<div class="post-container" ng-repeat="tovar in allTovars" style="display: grid;">
 		<h3>{{ tovar.tovar_name }} <div class="action">{{ tovar.action }}</div></h3>
 		<div class="post-text">

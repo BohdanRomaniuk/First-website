@@ -8,7 +8,7 @@ const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@l
 var sess;
 
 //SELECT TOVARS
-router.get('/server/index', (req, res, next) => {
+router.get('/server/index/:page_number&:order_type', (req, res, next) => {
 	sess=req.session;
 	const results = [];
 	pg.connect(connectionString, (err, client, done) => {
@@ -18,16 +18,37 @@ router.get('/server/index', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
 
+	var per_page = 3;
+	var limit_from = req.params.page_number*per_page-per_page;
+	
+	var order_type = req.params.order_type;
+	var ordering = "t.price ASC";
+	switch(order_type)
+	{
+		case "price_asc":
+			ordering = "t.price ASC";
+			break;
+		case "price_dsc":
+			ordering = "t.price DESC";
+			break;
+		case "action_asc":
+			ordering = "t.action ASC";
+			break;
+		case "action_dsc":
+			ordering = "t.action DESC";
+			break;
+	}
+	
 	var query;
 	if(sess.username)
 	{
-	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username = $1 AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY t.tovar_id ASC;', [sess.username]);
+	  query = client.query('SELECT t.*, b.username, b.cancel FROM tovars AS t LEFT JOIN (SELECT DISTINCT tovar_id, username, cancel FROM buckets WHERE username =($1) AND cancel=false) AS b ON t.tovar_id=b.tovar_id ORDER BY ' + ordering + ' LIMIT ($2) OFFSET ($3);', [sess.username, per_page, limit_from]);
 	}
 	else
 	{
-	  query = client.query('SELECT * FROM tovars ORDER BY tovar_id ASC;');
+	  query = client.query('SELECT t.* FROM tovars AS t ORDER BY ' + ordering + ' LIMIT ($1) OFFSET ($2);',[per_page, limit_from]);
 	}
-    query.on('row', (row) => {
+	query.on('row', (row) => {
 	  row.cancel = (sess.username && row.username==sess.username && !row.cancel)?"unset":"none";
 	  row.buy = (sess.username && row.cancel=="none")?"unset":"none";
 	  row.action = (row.action==0)?"":"Акція!!! -" + row.action + "% !!!";
