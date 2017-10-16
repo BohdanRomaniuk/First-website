@@ -21,6 +21,16 @@ app.controller('indexController', ($scope, $http) => {
   $http.get('/server/index/1&price_asc')
   .success((data) => {
     $scope.allTovars = data;
+	$scope.currentpage = "1";
+	var pages = document.getElementsByClassName("page");
+	for(var i=0; i<pages.length; ++i)
+	{
+	  if(pages[i].innerHTML=="1")
+	  {
+		pages[i].style.backgroundColor = "#fd8383";
+		pages[i].style.border = "1px solid #ab0606";
+	  }
+	}
     console.log(data);
   })
   .error((error) => {
@@ -41,6 +51,21 @@ app.controller('indexController', ($scope, $http) => {
   $scope.getTovars = (page, order) => {
     $http.get('/server/index/'+ page +'&' + order)
     .success((data) => {
+	  $scope.currentpage  = page;
+	  var pages = document.getElementsByClassName("page");
+	  for(var i=0; i<pages.length; ++i)
+	  {
+		if(pages[i].innerHTML==page)
+		{
+		  pages[i].style.backgroundColor = "#fd8383";
+		  pages[i].style.border = "1px solid #ab0606";
+		}
+		else
+		{
+		  pages[i].style.backgroundColor = "#a2fd83";
+		  pages[i].style.border = "1px solid #06ab20";
+		}
+	  }
       $scope.allTovars = data;
       console.log(data);
     })

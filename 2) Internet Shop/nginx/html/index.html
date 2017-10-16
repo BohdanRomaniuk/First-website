@@ -32,16 +32,22 @@
 		<option value="action_dsc">за спаданням акційної знижки</option>
 	</select>
 	<div style="float: right;">
-	Сторінка: <button class="btn" ng-repeat="page in pages">{{page.number}}</button>
+	<input type="hidden" ng-model="currentpage" value=1></input>
+	Сторінки: <button class="btn page" ng-repeat="page in pages" ng-click="getTovars(page.number, ordervalue);" style="padding: 2px 6px;margin-right: 3px;">{{page.number}}</button>    
 	</div>
 	</div>
 	<div class="post-container" ng-repeat="tovar in allTovars" style="display: grid;">
 		<h3>{{ tovar.tovar_name }} <div class="action">{{ tovar.action }}</div></h3>
 		<div class="post-text">
 			<a href="{{ tovar.image }}"><img src="{{ tovar.image }}" alt="{{ tovar.tovar_name }}" title="{{ tovar.tovar_name }}" style="max-width:400px; float: left;"/></a>
-			<button class="btn buy" style="float:left; color: green; display: {{ tovar.buy }};" ng-click="addTovarToBucket(tovar.tovar_id, 1, ordervalue)">Купити</button> <button class="btn buy cancel" style="float:left; color: black; display: {{ tovar.cancel }};" ng-click="deleteTovarFromBucket(tovar.tovar_id, 1, ordervalue)">Скасувати замовлення</button> <div class="price">{{ tovar.price }} грн.</div>
+			<button class="btn buy" style="float:left; color: green; display: {{ tovar.buy }};" ng-click="addTovarToBucket(tovar.tovar_id, currentpage, ordervalue)">Купити</button> <button class="btn buy cancel" style="float:left; color: black; display: {{ tovar.cancel }};" ng-click="deleteTovarFromBucket(tovar.tovar_id, currentpage, ordervalue)">Скасувати замовлення</button> <div class="price">{{ tovar.price }} грн.</div>
 			{{ tovar.description }}
 		</div>
+	</div>
+	<div class="post-container">
+	<div align="right">
+	Сторінки: <button class="btn page" ng-repeat="page in pages" ng-click="getTovars(page.number, ordervalue);" style="padding: 2px 6px;margin-right: 3px;">{{page.number}}</button>    
+	</div>
 	</div>
 </div>
 <script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>

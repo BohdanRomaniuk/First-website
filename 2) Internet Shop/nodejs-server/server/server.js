@@ -6,6 +6,8 @@ const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@l
 
 //USER SESSION!!!!!!!
 var sess;
+//TOVARS PER PAGE
+var per_page = 3;
 
 //SELECT TOVARS
 router.get('/server/index/:page_number&:order_type', (req, res, next) => {
@@ -18,7 +20,7 @@ router.get('/server/index/:page_number&:order_type', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
 
-	var per_page = 3;
+	
 	var limit_from = req.params.page_number*per_page-per_page;
 	
 	var order_type = req.params.order_type;
@@ -73,10 +75,12 @@ router.get('/server/pages', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
 
-	var query = client.query('SELECT * FROM tovars;');
-	var num =0;
+	var query = client.query('SELECT CEIL(CAST (COUNT(*) AS FLOAT)/'+per_page+')  AS pages FROM tovars;');
 	query.on('row', (row) => {
-      results.push({number: ++num});
+	  for(var i=1; i<=row.pages; ++i)
+	  {
+		results.push({number: i});
+	  }
     });
     query.on('end', () => {
       done();
