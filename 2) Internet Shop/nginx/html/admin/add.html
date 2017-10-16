@@ -1,11 +1,11 @@
 <!DOCTYPE HTML>
-<html ng-app="asusShop">
+<html>
 <head>
 	<meta charset="utf-8">
 	<title>Ноутбуки Asus - Додавання нового товару</title>
 	<link rel="stylesheet" type="text/css" href="../stylesheets/style.css"/>
 </head>
-<body ng-controller="adminController">
+<body>
 <table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
   <tbody>
     <tr>
@@ -31,43 +31,33 @@
 		<div class="post-text">
 			<div style="text-align:center;">
 			<p><div id="status"></div>
-			<form>
+			<form enctype="multipart/form-data" action="/server/admin/add" method="post">
 				<p>
 					<label>Назва товару:</label>
 					</br>
-					<input type="text" name="tovar_name" placeholder="Напр Asus Rog67" style="width: 200px;" ng-model="formData.tovar_name" required="required"/>
+					<input type="text" name="tovar_name" placeholder="Напр Asus Rog67" style="width: 200px;" required="required"/>
 				</p>
 				<p>
 					<label>Посилання на картинку:</label>
 					</br>
-					<!--<input type="text" name="link" placeholder="Напр /images/x23.jpg" style="width: 200px;" ng-model="formData.image_link" required="required"/>-->
-					<input type="file" ngf-select ng-model="up.file" name="file" ngf-pattern="'image/*'" accept="image/*" ngf-max-size="20MB" />
-					<img style="width:100px;" ng-show="!!up.file" ngf-thumbnail="up.file || '/thumb.jpg'"/>
-            <i ng-show="up.upload_form.file.$error.required">*required</i><br>
-            <i ng-show="up.upload_form.file.$error.maxSize">File too large 
-            {{up.file.size / 1000000|number:1}}MB: max 20M</i>
+					<input type="file" name="imagefile" id="imagefile"/>
 				</p>
 				<p>
 					<label>Опис товару:</label>
 					</br>
-					<textarea cols="27" rows="15" ng-model="formData.description"></textarea>
+					<textarea name="description" cols="27" rows="15"></textarea>
 				</p>
 				<p>
 					<label>Ціна:</label>
 					</br>
-					<input type="text" name="price" style="width: 200px;" ng-model="formData.price" required="required"/>
+					<input type="text" name="price" style="width: 200px;" required="required"/>
 				</p>
-				<button type="submit" class="btn" name="submit" ng-click="addTovar()">Додати товар</input>
+				<button type="submit" class="btn" name="submit">Додати товар</input>
 			</form>
 			</div>
 		</div>
 	</div>
 </div>
-<script src="../javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
-<script src="../javascripts/angular.min.js"></script>
-<script src="../javascripts/ng-file-upload.min.js"></script>
-<script src="../javascripts/ng-file-upload-shim.min.js"></script>
-<script src="admin.js"></script>
 <script>
 	document.getElementById("add").className += "active";
 </script>

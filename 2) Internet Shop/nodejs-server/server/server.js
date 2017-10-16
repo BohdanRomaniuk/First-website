@@ -4,6 +4,23 @@ const pg = require('pg');
 const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@localhost:5432/asus_shop';
 
+//File Uploading System
+var multer = require('multer');
+var image_filename;
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, '../nginx/html/images/');
+    },
+    filename: function (req, file, cb) {
+		image_filename = file.originalname;
+        cb(null, image_filename);
+    }
+});
+var upload = multer({
+    storage: storage
+});
+
+
 //USER SESSION!!!!!!!
 var sess;
 //TOVARS PER PAGE
@@ -384,21 +401,22 @@ router.get('/server/admin/index', (req, res, next) => {
 });
 
 //ADD NEW TOVAR
-router.post('/server/admin/add', (req, res, next) => {
+router.post('/server/admin/add', upload.single('imagefile'), function (req, res, next) {
 	var createdSuccesfully = false;
-	const data = {tovar_name: req.body.tovar_name, image_link: req.body.image_link, description: req.body.description, price: req.body.price};
+	const data = {tovar_name: req.body.tovar_name, image_link: '/images/'+image_filename, description: req.body.description, price: req.body.price};
 	pg.connect(connectionString, (err, client, done) => {
     if(err) {
       done();
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-	console.log(data.image_link);
-    //const query = client.query('INSERT INTO tovars(tovar_name, image, description, price) VALUES($1,$2,$3,$4);', [data.tovar_name, data.image_link, data.description, data.price]);
+	//console.log(req);
+    const query = client.query('INSERT INTO tovars(tovar_name, image, description, price) VALUES($1,$2,$3,$4);', [data.tovar_name, data.image_link, data.description, data.price]);
     createdSuccesfully = true;
     query.on('end', () => {
       done();
-      return res.json(createdSuccesfully);
+	  res.redirect('http://localhost:7070/admin/add.html');
+      //return res.json(createdSuccesfully);
     });
   });
 });
