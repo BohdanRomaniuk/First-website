@@ -22,15 +22,6 @@ app.controller('indexController', ($scope, $http) => {
   .success((data) => {
     $scope.allTovars = data;
 	$scope.currentpage = "1";
-	var pages = document.getElementsByClassName("page");
-	for(var i=0; i<pages.length; ++i)
-	{
-	  if(pages[i].innerHTML=="1")
-	  {
-		pages[i].style.backgroundColor = "#fd8383";
-		pages[i].style.border = "1px solid #ab0606";
-	  }
-	}
     console.log(data);
   })
   .error((error) => {
