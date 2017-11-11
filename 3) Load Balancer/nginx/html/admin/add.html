@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Ноутбуки Asus - Додавання нового товару</title>
+	<link rel="stylesheet" type="text/css" href="../stylesheets/style.css"/>
+</head>
+<body>
+<table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
+  <tbody>
+    <tr>
+      <td height="39" class="list" align="center">
+      <div style="max-width:1000px;">
+		<a href="/">
+			<div id="logo">Ноутбуки Asus</div>
+		</a>
+        <ul id="navigation">
+		  <li><a id="main" href="../">Головна</a></li>
+		  <li><a id="mainAdmin" href="./">Керування сайтом</a></li>
+		  <li><a id="add" href="./add.html">Додати товар</a></li>
+		  <li><a id="logout" href="../logout.html">Вийти</a></li>
+		</ul>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div id="main-container">
+	<div class="post-container"  style="display: grid;">
+		<h3>Додавання нового товару</h3>
+		<div class="post-text">
+			<div style="text-align:center;">
+			<p><div id="status"></div>
+			<form enctype="multipart/form-data" action="/server/admin/add" method="post">
+				<p>
+					<label>Назва товару:</label>
+					</br>
+					<input type="text" name="tovar_name" placeholder="Напр Asus Rog67" style="width: 200px;" required="required"/>
+				</p>
+				<p>
+					<label>Посилання на картинку:</label>
+					</br>
+					<input type="file" name="imagefile" id="imagefile"/>
+				</p>
+				<p>
+					<label>Опис товару:</label>
+					</br>
+					<textarea name="description" cols="27" rows="15"></textarea>
+				</p>
+				<p>
+					<label>Ціна:</label>
+					</br>
+					<input type="text" name="price" style="width: 200px;" required="required"/>
+				</p>
+				<button type="submit" class="btn" name="submit">Додати товар</input>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	document.getElementById("add").className += "active";
+</script>
+</body>
+</html>
+

@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html ng-app="asusShop">
+<head>
+	<meta charset="utf-8">
+	<title>Ноутбуки Asus - Рестрація користувача</title>
+	<link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
+</head>
+<body ng-controller="registerController">
+<table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
+  <tbody>
+    <tr>
+      <td height="39" class="list" align="center">
+      <div style="max-width:1000px;">
+		<a href="/">
+			<div id="logo">Ноутбуки Asus</div>
+		</a>
+        <ul id="navigation">
+          <li ng-repeat="nav in navigationElems"><a id="{{ nav.name }}" href="{{ nav.href }}" ng-style="{{ nav.name }}">{{ nav.text }}</a></li>
+		</ul>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div id="main-container">
+	<div class="post-container"  style="display: grid;">
+		<h3>Реєстрація нового користувача</h3>
+		<div class="post-text">
+			<div style="text-align:center;">
+			<p><div id="status"></div>
+			<form>
+				<p>
+					<label>Імя користувача:</label>
+					</br>
+					<input type="text" name="user_name" placeholder="Бажане імя користувача" style="width: 200px;" ng-model="formData.username" required="required"/>
+				</p>
+				<p>
+					<label>Пароль:</label>
+					</br>
+					<input type="password" name="user_password" placeholder="Бажаний пароль" style="width: 200px;" ng-model="formData.userpassword" required="required"/>
+				</p>
+				<button type="submit" class="btn" name="submit" ng-click="createUser()">Зареєструватися</input>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
+<script src="javascripts/angular.min.js"></script>
+<script src="javascripts/main.js"></script>
+</body>
+</html>
+

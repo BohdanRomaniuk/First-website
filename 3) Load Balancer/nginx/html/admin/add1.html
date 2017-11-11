@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html ng-app="asusShop">
+<head>
+	<meta charset="utf-8">
+	<title>Ноутбуки Asus - Додавання нового товару</title>
+	<link rel="stylesheet" type="text/css" href="../stylesheets/style.css"/>
+</head>
+<body ng-controller="adminController">
+<table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
+  <tbody>
+    <tr>
+      <td height="39" class="list" align="center">
+      <div style="max-width:1000px;">
+		<a href="/">
+			<div id="logo">Ноутбуки Asus</div>
+		</a>
+        <ul id="navigation">
+		  <li><a id="main" href="../">Головна</a></li>
+		  <li><a id="mainAdmin" href="./">Керування сайтом</a></li>
+		  <li><a id="add" href="./add.html">Додати товар</a></li>
+		  <li><a id="logout" href="../logout.html">Вийти</a></li>
+		</ul>
+      </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div id="main-container">
+	<div class="post-container"  style="display: grid;">
+		<h3>Додавання нового товару</h3>
+		<div class="post-text">
+			<div style="text-align:center;">
+			<p><div id="status"></div>
+			<form enctype="multipart/form-data">
+				<p>
+					<label>Назва товару:</label>
+					</br>
+					<input type="text" name="tovar_name" placeholder="Напр Asus Rog67" style="width: 200px;" ng-model="formData.tovar_name" required="required"/>
+				</p>
+				<p>
+					<label>Посилання на картинку:</label>
+					</br>
+					<input type="file" name="imagefile" id="imagefile" ng-model="formData.imagefile"/>
+				</p>
+				<p>
+					<label>Опис товару:</label>
+					</br>
+					<textarea cols="27" rows="15" name="description" ng-model="formData.description"></textarea>
+				</p>
+				<p>
+					<label>Ціна:</label>
+					</br>
+					<input type="text" name="price" style="width: 200px;" ng-model="formData.price" required="required"/>
+				</p>
+				<button type="submit" class="btn" name="submit" ng-click="addTovar()">Додати товар</input>
+			</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script src="../javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
+<script src="../javascripts/angular.min.js"></script>
+<script src="../javascripts/ng-file-upload.min.js"></script>
+<script src="../javascripts/ng-file-upload-shim.min.js"></script>
+<script src="admin.js"></script>
+<script>
+	document.getElementById("add").className += "active";
+</script>
+</body>
+</html>
+
