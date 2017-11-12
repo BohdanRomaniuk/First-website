@@ -28,27 +28,75 @@
 		<div class="post-text">
 			<form>
 				<label>Кількість невідомих(розмір системи):</label>
-				<input type="text" name="quantity" placeholder="наприклад 5"/>
+				<input type="text" name="quantity" placeholder="наприклад 5" onchange="checkQuantity(this)"/>
 				</br>
 				<label>Вхідна матриця</label>
-				<textarea name="inputMatrix"  placeholder="a11 a12 a13 ... a1n
-a21 a22 a23 ... a2n
-...................
-an1 an2 an3 ... ann" style="width:100%;height:250px;"></textarea>
+				<textarea name="inputMatrix"  placeholder="" style="width:100%;height:250px;"></textarea>
+				</br>
 				<label>Вектор:</label>
-				<input type="text" name="vector" placeholder="b1 b2 b3 ... bn" style="width:100%"/>
+				<input type="text" name="vector" placeholder="" style="width:100%"/>
+				</br>
+				<label>Функції:</label>
+				</br>
+				<input type="submit" name="calculate" value="Розвязати систему" class="btn buy"/>
+				<button name="abort" class="btn buy cancel">Зупинити розвязування</button>
 			</form>
 		</div>
 	</div>
 	<div class="post-container" style="display: grid;">
 		<h3>Результати обчислень</h3>
-		<div class="post-text">
-			лялялял
+		<div class="post-text" style="text-align: center;">
+			<div class="progress" style="display:none;">Прогрес <span id="progress_percentage">0</span>%
+				<img src="/images/loading.gif" alt="Loading..." style="max-width:120px;"/>
+			</div>
 		</div>
 	</div>
 </div>
 <script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
 <script src="javascripts/angular.min.js"></script>
 <script src="javascripts/main.js"></script>
+<script>
+function checkQuantity(quantityElem)
+{
+	var quantity;
+	if(parseInt(quantityElem.value))
+	{
+		quantity = parseInt(quantityElem.value);
+	}
+	else
+	{
+		alert("Кількість невідомих повинна бути цілого типу, більша 0");
+		quantityElem.value = 1;
+	}
+	
+	
+	if(quantity>30)
+	{
+		alert("Кількість невідомих не може перевищувати 30");
+		quantityElem.value = 30;
+		quantity = 30;
+	}
+	else if(quantity<0)
+	{
+		alert("Кількість невідомих не може бути меншою рівною 0");
+		quantityElem.value = 1;
+		quantity = 1;
+	}
+	
+	var textAreaPlaceholder = "";
+	var textVectorPlaceholder = "";
+	for(var i=0; i<quantity; ++i)
+	{
+		for(var j=0; j<quantity; ++j)
+		{
+			textAreaPlaceholder += "a"+(i+1)+""+(j+1)+"\t";
+		}
+		textAreaPlaceholder+="\n";
+		textVectorPlaceholder+= "b"+(i+1)+"\t";
+	}
+	document.getElementsByName("inputMatrix")[0].placeholder=textAreaPlaceholder;
+	document.getElementsByName("vector")[0].placeholder=textVectorPlaceholder;
+}
+</script>
 </body>
 </html>
