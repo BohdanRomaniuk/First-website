@@ -65,8 +65,8 @@ function checkQuantity(quantityElem)
 	}
 	else
 	{
-		alert("Кількість невідомих повинна бути цілого типу, більша 0");
-		quantityElem.value = 1;
+		alert("Кількість невідомих повинна бути цілого типу, більша 1");
+		quantityElem.value = 2;
 	}
 	
 	
@@ -76,11 +76,11 @@ function checkQuantity(quantityElem)
 		quantityElem.value = 30;
 		quantity = 30;
 	}
-	else if(quantity<0)
+	else if(quantity<1)
 	{
-		alert("Кількість невідомих не може бути меншою рівною 0");
-		quantityElem.value = 1;
-		quantity = 1;
+		alert("Кількість невідомих не може бути меншою рівною 1");
+		quantityElem.value = 2;
+		quantity = 2;
 	}
 	
 	var textAreaPlaceholder = "";
@@ -89,7 +89,7 @@ function checkQuantity(quantityElem)
 	{
 		for(var j=0; j<quantity; ++j)
 		{
-			textAreaPlaceholder += "a"+(i+1)+""+(j+1)+"\t";
+			textAreaPlaceholder += "a"+(i+1)+"."+(j+1)+"\t";
 		}
 		textAreaPlaceholder+="\n";
 		textVectorPlaceholder+= "b"+(i+1)+"\t";
