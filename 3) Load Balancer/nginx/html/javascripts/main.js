@@ -3,6 +3,7 @@ app = angular.module('loadBalancer', []);
 app.controller('indexController', ($scope, $http) => {
   $scope.navigationElems = {};
   $scope.allTovars = {};
+  $scope.formData = {};
   $scope.pages = {};
   $scope.main = { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
   $scope.ordervalue = "price_asc";
@@ -16,6 +17,19 @@ app.controller('indexController', ($scope, $http) => {
   .error((error) => {
     console.log('Error: ' + error);
   });
+  
+  // Start Householder calculations
+  $scope.startCalculation = () => {
+    $http.post('/server/calculate', $scope.formData)
+    .success((data) => {
+      //$scope.formData = {};
+	  document.getElementById('result').innerHTML = data;
+      console.log(data);
+    })
+    .error((error) => {
+      console.log('Error: ' + error);
+    });
+  };
 });
 
 app.controller('loginController', ($scope, $http) => {
@@ -103,6 +117,7 @@ app.controller('registerController', ($scope, $http) => {
 
 app.controller('profileController', ($scope, $http) => {
   $scope.navigationElems = {};
+  $scope.oldCalculations = {};
   $scope.formData = {};
   $scope.profile= { "color" : "#83e407", "border-bottom" : "4px solid #81e407" };
   
@@ -115,6 +130,16 @@ app.controller('profileController', ($scope, $http) => {
 		"color" : "#83e407",
 		"border-bottom" : "4px solid #81e407"
 	}
+    console.log(data);
+  })
+  .error((error) => {
+    console.log('Error: ' + error);
+  });
+  
+  // Get all OldCalculation
+  $http.get('/server/old_calculations')
+  .success((data) => {
+    $scope.oldCalculations = data;
     console.log(data);
   })
   .error((error) => {

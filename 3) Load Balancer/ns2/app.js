@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser');
 var session		=	require('express-session');
 const bodyParser = require('body-parser');
 
-const routes = require('./server/server1');
+const routes = require('./server/server2');
  //var users = require('./server/routes/users');
 
 const app = express();
