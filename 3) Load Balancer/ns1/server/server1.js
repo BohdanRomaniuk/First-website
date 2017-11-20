@@ -6,7 +6,6 @@ const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@1
 //USER SESSION!!!!!!!
 var sess;
 
-
 //CALCULATIONS
 router.post('/server/calculate', (req, res, next) => {
   sess = req.session;
@@ -233,13 +232,34 @@ router.get('/server/old_calculations', (req, res, next) => {
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-    const query = client.query('SELECT* FROM tasks WHERE username=$1', [sess.username]);
+    const query = client.query('SELECT task_id, username, task_system_size, task_input_matrix, task_input_vector, task_date FROM tasks WHERE username=$1', [sess.username]);
     query.on('row', (row) => {
 		results.push(row);
     });
     query.on('end', () => {
       done();
       return res.json(results);
+    });
+  });
+});
+
+//GET RESULT INFO ABOUT TASK CALCULATIONS
+router.get('/server/task/:task_id', (req, res, next) => {
+	sess=req.session;
+	const result = [];
+	pg.connect(connectionString, (err, client, done) => {
+    if(err) {
+      done();
+      console.log(err);
+      return res.status(500).json({success: false, data: err});
+    }
+    const query = client.query('SELECT task_result FROM tasks WHERE task_id=$1 LIMIT 1', [req.params.task_id]);
+    query.on('row', (row) => {
+		result.push(row);
+    });
+    query.on('end', () => {
+      done();
+      return res.json(result);
     });
   });
 });

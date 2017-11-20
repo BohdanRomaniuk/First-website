@@ -5,12 +5,12 @@
 	<title>СЛАР - Профіль користувача</title>
 	<link rel="stylesheet" type="text/css" href="stylesheets/style.css"/>
 </head>
-<body ng-controller="profileController">
+<body ng-controller="profileController" onload="loadOldCalculations()">
 <table id="bar" width="100%" cellspacing=0 cellpadding=0 style="position:relative;">
   <tbody>
     <tr>
       <td height="39" class="list" align="center">
-      <div style="max-width:1000px;">
+      <div style="max-width:1280px;">
 		<a href="/">
 			<div id="logo">Метод Хаусхолдера</div>
 		</a>
@@ -23,9 +23,9 @@
   </tbody>
 </table>
 <div id="main-container">
-	<div class="post-container"  style="display: grid;background: #dcf9e1;">
+	<div class="post-container" id="succesfull" style="display: grid;background: #dcf9e1;">
 		<h3>Успішно виконанні завдання</h3>
-		<div class="post-container" style="display: grid; white-space: pre-line;" ng-repeat="old in oldCalculations">
+		<!--<div class="post-container" style="display: grid; white-space: pre-line;" ng-repeat="old in oldCalculations">
 		<h3>Завдання №{{ old.task_id }} <span style="float:right">Дата: {{ old.task_date }}</span></h3>
 		<div align="center"><b>Вхідна матриця ({{ old.task_system_size }}x{{ old.task_system_size }})</b>
 		{{ old.task_input_matrix }}
@@ -33,15 +33,109 @@
 		<div align="center"><b>Вхідний вектор ({{ old.task_system_size }})</b>
 		{{ old.task_input_vector }}
 		</div>
-		<div align="center"><b>Результат обчислень</b></div>
-		{{ old.task_result }}
+		<div align="center"><b>Результат обчислень</b>
+		<button name="load" class="btn buy" onclick="loadResult(this, 1)" style="width:300px;">Підвантажити результати обчислень</button>
 		</div>
+		</div>-->
 	</div>
 	</div>
 </div>
 <script src="javascripts/jquery-2.2.4.min.js" type="text/javascript"></script>
 <script src="javascripts/angular.min.js"></script>
 <script src="javascripts/main.js"></script>
+<script>
+function loadOldCalculations()
+{
+	var http = new XMLHttpRequest();
+	http.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var olds = JSON.parse(this.responseText);
+			for(var i=0; i<olds.length; ++i)
+			{
+				var post_container = document.createElement("DIV");
+				post_container.setAttribute("class","post-container");
+				post_container.setAttribute("style","display: grid; white-space: pre-line;");
+				var header = document.createElement("H3");
+				header.appendChild(document.createTextNode("Завдання №"+olds[i].task_id));
+				var date = document.createElement("SPAN");
+				date.setAttribute("style","float:right;");
+				date.appendChild(document.createTextNode("Дата: "+olds[i].task_date.substring(0,10)));
+				header.appendChild(date);
+				
+				var matrix=document.createElement("DIV");
+				matrix.setAttribute("style","text-align: center;");
+				var b_matr = document.createElement("B");
+				b_matr.appendChild(document.createTextNode("Вхідна матриця ("+olds[i].task_system_size+")х("+olds[i].task_system_size+")\n"));
+				matrix.appendChild(b_matr);
+				matrix.appendChild(document.createTextNode(olds[i].task_input_matrix));
+				
+				var vector=document.createElement("DIV");
+				vector.setAttribute("style","text-align: center;");
+				var b_vec = document.createElement("B");
+				b_vec.appendChild(document.createTextNode("\nВхідний вектор ("+olds[i].task_system_size+")\n"));
+				vector.appendChild(b_vec);
+				vector.appendChild(document.createTextNode(olds[i].task_input_vector));
+				
+				var result=document.createElement("DIV");
+				result.setAttribute("style","text-align: center;");
+				var b_res = document.createElement("B");
+				b_res.appendChild(document.createTextNode("\nРезультати обчислень\n"));
+				result.appendChild(b_res);
+				
+				var button = document.createElement("BUTTON");
+				button.setAttribute("class","btn buy");
+				button.setAttribute("id","show-"+olds[i].task_id);
+				button.appendChild(document.createTextNode("Підвантажити результати обчислень"));
+				button.setAttribute('onclick','loadResult(this, '+olds[i].task_id+');');
+				
+				var button1 = document.createElement("BUTTON");
+				button1.setAttribute("class","btn buy cancel");
+				button1.setAttribute("id","hide-"+olds[i].task_id);
+				button1.setAttribute("style","display:none;");
+				button1.appendChild(document.createTextNode("Сховати результати обчислень"));
+				button1.setAttribute('onclick','hideResults(this, '+olds[i].task_id+');');
+				
+				result.appendChild(button);
+				result.appendChild(button1);
+				
+				var res_id = document.createElement("DIV");
+				res_id.setAttribute("id","task-"+olds[i].task_id);
+				result.appendChild(res_id);
+				
+				post_container.appendChild(header);
+				post_container.appendChild(matrix);
+				post_container.appendChild(vector);
+				post_container.appendChild(result);
+				document.getElementById("succesfull").appendChild(post_container);
+			}
+		}
+	};
+	http.open("GET", "/server/old_calculations", true);
+	http.send();
+}
+
+function loadResult(to_hide,task_id)
+{
+	var http = new XMLHttpRequest();
+	http.onreadystatechange = function() {
+		if (this.readyState == 4 && this.status == 200) {
+			var result = JSON.parse(this.responseText);
+			document.getElementById("task-"+task_id).innerHTML=result[0].task_result;
+		}
+	}
+	http.open("GET", "/server/task/"+task_id, true);
+	http.send();
+	to_hide.style="display:none;"
+	document.getElementById("hide-"+task_id).style="display:unset;";
+}
+
+function hideResults(to_hide, task_id)
+{
+	document.getElementById("show-"+task_id).style="display:unset;";
+	document.getElementById("task-"+task_id).innerHTML="";
+	to_hide.style="display:none;"
+}
+</script>
 </body>
 </html>
 
