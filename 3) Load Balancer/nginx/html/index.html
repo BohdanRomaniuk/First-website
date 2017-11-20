@@ -28,14 +28,14 @@
 		<div class="post-text">
 			<form>
 				<label>Кількість невідомих(розмір системи):</label>
-				<input type="text" name="quantity" placeholder="наприклад 5" onchange="checkQuantity(this)"/>
+				<input type="text" name="quantity" placeholder="наприклад 5" onchange="checkQuantity(this)" required="required"/>
 				<button name="generate" class="btn buy" onclick="generateRandom()">Згенерувати випадково</button>
 				</br>
 				<label>Вхідна матриця</label>
-				<textarea name="inputMatrix"  placeholder="" style="width:100%;height:300px;"></textarea>
+				<textarea name="inputMatrix"  placeholder="" style="width:100%;height:300px;" required="required"></textarea>
 				</br>
 				<label>Вектор:</label>
-				<input type="text" name="vector" placeholder="" style="width:100%"/>
+				<input type="text" name="vector" placeholder="" style="width:100%" required="required"/>
 				</br>
 				<label>Функції:</label>
 				</br>
@@ -112,10 +112,18 @@ function generateRandom()
 	{
 		for(var j=0; j<quantity; ++j)
 		{
-			randomMatrix += Math.floor((Math.random() * 100) + 1) + " ";
+			randomMatrix += Math.floor((Math.random() * 100) + 1);
+			if(j!=quantity-1)
+			{
+				randomMatrix+=" ";
+			}
 		}
-		randomMatrix += "\n";
-		randomVector += Math.floor((Math.random() * 100) + 1) + " ";
+		randomVector += Math.floor((Math.random() * 100) + 1);
+		if(i!=quantity-1)
+		{
+			randomMatrix+="\n";
+			randomVector+=" ";
+		}
 	}
 	document.getElementsByName("inputMatrix")[0].value=randomMatrix;
 	document.getElementsByName("vector")[0].value=randomVector;
@@ -125,19 +133,24 @@ function sendToCalculation()
 {
 	var http = new XMLHttpRequest();
 	var url = "/server/calculate";
+	var size = document.getElementsByName("quantity")[0].value;
 	var matrix = document.getElementsByName("inputMatrix")[0].value;
 	var vector = document.getElementsByName("vector")[0].value;
-	var params = "matrix="+matrix+"&vector="+vector;
-	http.onreadystatechange = function() 
+	var params = "system_size="+size+"&matrix="+matrix+"&vector="+vector;
+	/*http.onreadystatechange = function() 
 	{
 		if (http.readyState == XMLHttpRequest.DONE) 
 		{
-			document.getElementById("result").innerHTML=http.responseText;
+			document.getElementById("result").innerHTML=http.response;
 		}
-	}
-	http.open("POST", url, true);
+	}*/
+	http.open("POST", url, false);
 	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	http.send(params);
+	if(http.readyState==4)
+	{
+		document.getElementById("result").innerHTML=http.responseText.replace('"',' ');
+	}
 }
 
 function stopCalculation()

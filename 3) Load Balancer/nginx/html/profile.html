@@ -25,12 +25,14 @@
 <div id="main-container">
 	<div class="post-container"  style="display: grid;background: #dcf9e1;">
 		<h3>Успішно виконанні завдання</h3>
-		<div class="post-container" style="display: grid;" ng-repeat="old in oldCalculations">
+		<div class="post-container" style="display: grid; white-space: pre-line;" ng-repeat="old in oldCalculations">
 		<h3>Завдання №{{ old.task_id }} <span style="float:right">Дата: {{ old.task_date }}</span></h3>
-		<div align="center"><b>Вхідна матриця</b></div>
+		<div align="center"><b>Вхідна матриця ({{ old.task_system_size }}x{{ old.task_system_size }})</b>
 		{{ old.task_input_matrix }}
-		<div align="center"><b>Вхідний вектор</b></div>
+		</div>
+		<div align="center"><b>Вхідний вектор ({{ old.task_system_size }})</b>
 		{{ old.task_input_vector }}
+		</div>
 		<div align="center"><b>Результат обчислень</b></div>
 		{{ old.task_result }}
 		</div>

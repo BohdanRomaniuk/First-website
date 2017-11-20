@@ -10,16 +10,99 @@ var sess;
 //CALCULATIONS
 router.post('/server/calculate', (req, res, next) => {
   sess = req.session;
-  var calculation_result="невизначено";
-  const input = {matrix: req.body.matrix, vector: req.body.vector};
+  var calculation_result="";
+  const input = {size: req.body.system_size, matrix: req.body.matrix, vector: req.body.vector};
   pg.connect(connectionString, (err, client, done) => {
     if(err) {
       done();
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
-	calculation_result = "якісь обчислення які виконуються на сервері";
-    const query = client.query('INSERT INTO tasks(username,task_input_matrix,task_input_vector,task_result,task_date) VALUES($1,$2,$3,$4,$5);', [sess.username, input.matrix, input.vector, calculation_result, '2017-11-14']);
+	var size = input.size;
+	var matrix = new Array(size);
+	var matrix_lines = input.matrix.split("\n");
+	for(var i=0; i<size; ++i)
+	{
+		matrix[i] = new Array(size);
+		var matrix_line = matrix_lines[i].split(" ");
+		for(var j=0; j<size; ++j)
+		{
+			matrix[i][j] = parseFloat(matrix_line[j]);
+		}
+	}
+	
+	for(var k=0; k<size; ++k)
+	{
+		var sigma_sum =0;
+		for(var i=k; i<size; ++i)
+		{
+			sigma_sum+=matrix[i][k]*matrix[i][k];
+		}
+		var signum = (matrix[k][k]>0)?-1:1;
+		var sigma = signum*Math.sqrt(sigma_sum);
+		calculation_result+="</br><b style='color:red;'>Крок №"+(k+1)+"</b><br>";
+		calculation_result+="σ<sub>"+(k+1)+"</sub>="+sigma+"<br>";
+		
+		var beta = 1/(sigma*sigma-sigma*matrix[k][k]);
+		calculation_result+="</br>β<sub>"+(k+1)+"</sub>="+beta+"<br>";
+		
+		var u = new Array(size);
+		for(var i=0; i<k; ++i)
+		{
+			u[i]=0;
+		}
+		u[k]=matrix[i][k]-sigma;
+		for(var i=k+1; i<size; ++i)
+		{
+			u[i] = matrix[i][k];
+		}
+		calculation_result+="<br>u<sup>("+(k+1)+")</sup>=[";
+		for(var i=0; i<size; ++i)
+		{
+			calculation_result+=u[i];
+			if(i!=size-1)
+			{
+				calculation_result+=" ";
+			}
+		}
+		calculation_result+="]<br>";
+		calculation_result+="</br>Матриця u<sup>("+(k+1)+")</sup>u<sup>("+(k+1)+")T</sup></br>";
+		var u_matrix = new Array(size);
+		for(var i=0; i<size; ++i)
+		{
+			u_matrix[i] = new Array(size);
+			calculation_result+="[";
+			for(var j=0; j<size; ++j)
+			{
+				u_matrix[i][j]=u[i]*u[j];
+				calculation_result+=u_matrix[i][j];
+				if(j!=size-1)
+				{
+					calculation_result+=" ";
+				}
+			}
+			calculation_result+="]</br>";
+		}
+		
+		var one_matrix = new Array(size);
+		for(var i=0; i<size; ++i)
+		{
+			
+		}
+	}
+	
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1;
+	var yyyy = today.getFullYear();
+	if(dd<10) {
+		dd = '0'+dd
+	}
+	if(mm<10) {
+		mm = '0'+mm
+	} 
+	today = yyyy+"-"+mm+"-"+dd;
+    const query = client.query('INSERT INTO tasks(username, task_system_size, task_input_matrix,task_input_vector,task_result,task_date) VALUES($1,$2,$3,$4,$5,$6);', [sess.username, input.size, input.matrix, input.vector, calculation_result, today]);
     
     query.on('end', () => {
       done();

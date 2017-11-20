@@ -9,7 +9,8 @@ INSERT INTO users VALUES('user1','user1','simple');
 
 CREATE TABLE tasks (
 	task_id SERIAL PRIMARY KEY,
-	username varchar(50) NOT NULL,
+	username varchar(50) DEFAULT 'guest',
+	task_system_size int NOT NULL,
 	task_input_matrix text NOT NULL,
 	task_input_vector text NOT NULL,
 	task_result text NOT NULL DEFAULT 'виконання даного завдання було скасовано',

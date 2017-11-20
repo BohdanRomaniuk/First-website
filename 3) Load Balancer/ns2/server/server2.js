@@ -11,7 +11,7 @@ var sess;
 router.post('/server/calculate', (req, res, next) => {
   sess = req.session;
   var calculation_result="невизначено";
-  const input = {matrix: req.body.matrix, vector: req.body.vector};
+  const input = {size: req.body.system_size, matrix: req.body.matrix, vector: req.body.vector};
   pg.connect(connectionString, (err, client, done) => {
     if(err) {
       done();
@@ -19,7 +19,7 @@ router.post('/server/calculate', (req, res, next) => {
       return res.status(500).json({success: false, data: err});
     }
 	calculation_result = "якісь обчислення які виконуються на сервері";
-    const query = client.query('INSERT INTO tasks(username,task_input_matrix,task_input_vector,task_result,task_date) VALUES($1,$2,$3,$4,$5);', [sess.username, input.matrix, input.vector, calculation_result, '2017-11-14']);
+    const query = client.query('INSERT INTO tasks(username, task_system_size, task_input_matrix,task_input_vector,task_result,task_date) VALUES($1,$2,$3,$4,$5,$6);', [sess.username, input.size, input.matrix, input.vector, calculation_result, '2017-11-14']);
     
     query.on('end', () => {
       done();
