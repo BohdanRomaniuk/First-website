@@ -5,6 +5,8 @@ const path = require('path');
 const connectionString = process.env.DATABASE_URL || 'postgres://postgres:1234@127.0.0.1:5432/load_balancer';
 //USER SESSION!!!!!!!
 var sess;
+var progress = 0;
+var canceled = false;
 
 //CALCULATIONS
 router.post('/server/calculate', (req, res, next) => {
@@ -17,6 +19,8 @@ router.post('/server/calculate', (req, res, next) => {
       console.log(err);
       return res.status(500).json({success: false, data: err});
     }
+	progress = 0;
+	canceled = false;
 	var size = input.size;
 	var matrix = new Array(size);
 	var vector = new Array(size);
@@ -33,8 +37,11 @@ router.post('/server/calculate', (req, res, next) => {
 		vector[i] = parseFloat(vector_line[i]);
 	}
 	
+	var pr = 0;
 	for(var k=0; k<size; ++k)
 	{
+		++pr;
+		progress = (pr/size)*100;
 		var sigma_sum =0;
 		for(var i=k; i<size; ++i)
 		{
@@ -202,22 +209,19 @@ router.post('/server/calculate', (req, res, next) => {
 		calculation_result+="x<sub>"+(i+1)+"</sub>="+x[i]+"</br>";
 	}
 	
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1;
-	var yyyy = today.getFullYear();
-	if(dd<10) {
-		dd = '0'+dd
-	}
-	if(mm<10) {
-		mm = '0'+mm
-	} 
-	today = yyyy+"-"+mm+"-"+dd;
-    const query = client.query('INSERT INTO tasks(username, task_system_size, task_input_matrix,task_input_vector,task_result,task_date) VALUES($1,$2,$3,$4,$5,$6);', [sess.username, input.size, input.matrix, input.vector, calculation_result, today]);
+	
+    const query = client.query('INSERT INTO tasks(username, task_system_size, task_input_matrix,task_input_vector,task_result,task_date) VALUES($1,$2,$3,$4,$5,CURRENT_DATE);', [sess.username, input.size, input.matrix, input.vector, calculation_result]);
     
     query.on('end', () => {
       done();
-      return res.json(calculation_result);
+	  if(canceled)
+	  {
+		return res.json("Обрахунок було перервано");
+	  }
+	  else
+	  {
+		return res.json(calculation_result);
+	  }
     });
   });
 });
@@ -262,6 +266,20 @@ router.get('/server/task/:task_id', (req, res, next) => {
       return res.json(result);
     });
   });
+});
+
+//GET PROGRESS PERCENTAGE STATUS
+router.get('/server/progress', (req, res, next) => {
+	sess=req.session;
+    return res.json(progress);
+});
+
+
+//ABORT CURRENT TASK
+router.post('/server/abort', (req, res, next)=> {
+	sess=req.session;
+	canceled=true;
+	return res.json("Aborted");
 });
 
 //REGISTER NEW USER

@@ -41,15 +41,14 @@
 				</br>
 				<input type="submit" name="calculate" value="Розвязати систему" class="btn buy" onclick="sendToCalculation()"/>
 				<button name="abort" class="btn buy cancel" onclick="stopCalculation()">Зупинити розвязування</button>
+				<button name="check" class="btn buy" onclick="checkProgress()">Перевірити статус виконання</button>
 			</form>
 		</div>
 	</div>
 	<div class="post-container" style="display: grid;">
 		<h3>Результати обчислень</h3>
 		<div class="post-text" style="text-align: center;">
-			<div class="progress" style="display:none;">Прогрес <span id="progress_percentage">0</span>%
-				<img src="/images/loading.gif" alt="Loading..." style="max-width:120px;"/>
-			</div>
+			<div id="progress"></div>
 			<div id="result">
 			обрахунок...
 			</div>
@@ -137,25 +136,40 @@ function sendToCalculation()
 	var matrix = document.getElementsByName("inputMatrix")[0].value;
 	var vector = document.getElementsByName("vector")[0].value;
 	var params = "system_size="+size+"&matrix="+matrix+"&vector="+vector;
-	/*http.onreadystatechange = function() 
+	http.open("POST", url, true);
+	http.onreadystatechange = function()
 	{
 		if (http.readyState == XMLHttpRequest.DONE) 
 		{
-			document.getElementById("result").innerHTML=http.response;
+			document.getElementById("result").innerHTML=http.responseText.replace('"',' ');
 		}
-	}*/
-	http.open("POST", url, false);
+	}
 	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	http.send(params);
-	if(http.readyState==4)
+}
+
+function checkProgress()
+{
+	var progress =0;
+	var http = new XMLHttpRequest();
+	http.open("GET","/server/progress",true);
+	http.onreadystatechange = function() 
 	{
-		document.getElementById("result").innerHTML=http.responseText.replace('"',' ');
+		if (http.readyState == XMLHttpRequest.DONE) 
+		{
+			progress = http.responseText;
+			document.getElementById("progress").innerHTML = "Прогрес "+progress+"%";
+		}
 	}
+	http.send();
 }
 
 function stopCalculation()
 {
-	
+	var http = new XMLHttpRequest();
+	http.open("POST","/server/abort",true);
+	document.getElementById("result").innerHTML="Обрахунок було перервано";
+	http.send();
 }
 </script>
 </body>
