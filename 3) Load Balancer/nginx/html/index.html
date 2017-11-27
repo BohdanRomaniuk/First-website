@@ -136,7 +136,6 @@ function sendToCalculation()
 	var matrix = document.getElementsByName("inputMatrix")[0].value;
 	var vector = document.getElementsByName("vector")[0].value;
 	var params = "system_size="+size+"&matrix="+matrix+"&vector="+vector;
-	http.open("POST", url, true);
 	http.onreadystatechange = function()
 	{
 		if (http.readyState == XMLHttpRequest.DONE) 
@@ -144,6 +143,7 @@ function sendToCalculation()
 			document.getElementById("result").innerHTML=http.responseText.replace('"',' ');
 		}
 	}
+	http.open("POST", url, true);
 	http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	http.send(params);
 }
@@ -152,7 +152,6 @@ function checkProgress()
 {
 	var progress =0;
 	var http = new XMLHttpRequest();
-	http.open("GET","/server/progress",true);
 	http.onreadystatechange = function() 
 	{
 		if (http.readyState == XMLHttpRequest.DONE) 
@@ -161,8 +160,15 @@ function checkProgress()
 			document.getElementById("progress").innerHTML = "Прогрес "+progress+"%";
 		}
 	}
+	http.open("GET","/server/progress",true);
 	http.send();
 }
+
+/*
+setInterval(function() {
+  checkProgress();
+}, 100)
+*/
 
 function stopCalculation()
 {

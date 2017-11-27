@@ -8,6 +8,16 @@ var sess;
 var progress = 0;
 var canceled = false;
 
+function sleep(milliseconds) {
+  var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > milliseconds){
+      break;
+    }
+  }
+}
+
+
 //CALCULATIONS
 router.post('/server/calculate', (req, res, next) => {
   sess = req.session;
@@ -41,7 +51,9 @@ router.post('/server/calculate', (req, res, next) => {
 	for(var k=0; k<size; ++k)
 	{
 		++pr;
+		sleep(250);
 		progress = (pr/size)*100;
+		console.log(progress);
 		var sigma_sum =0;
 		for(var i=k; i<size; ++i)
 		{
