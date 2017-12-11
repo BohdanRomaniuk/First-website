@@ -8,16 +8,6 @@ var sess;
 var progress = 0;
 var canceled = false;
 
-function sleep(milliseconds) {
-  var start = new Date().getTime();
-  for (var i = 0; i < 1e7; i++) {
-    if ((new Date().getTime() - start) > milliseconds){
-      break;
-    }
-  }
-}
-
-
 //CALCULATIONS
 router.post('/server/calculate', (req, res, next) => {
   sess = req.session;
@@ -48,177 +38,119 @@ router.post('/server/calculate', (req, res, next) => {
 	}
 	
 	var pr = 0;
+	//Прямий хід
 	for(var k=0; k<size; ++k)
 	{
 		++pr;
-		sleep(250);
 		progress = (pr/size)*100;
 		console.log(progress);
-		var sigma_sum =0;
-		for(var i=k; i<size; ++i)
+		var t = new Array(size);;
+		for (var i = 0; i < size; ++i)
 		{
-			sigma_sum+=matrix[i][k]*matrix[i][k];
-		}
-		var signum = (matrix[k][k]>0)?-1:1;
-		var sigma = signum*Math.sqrt(sigma_sum);
-		calculation_result+="</br><b style='color:red;'>Крок №"+(k+1)+"</b><br>";
-		calculation_result+="σ<sub>"+(k+1)+"</sub>="+sigma+"<br>";
-		
-		var beta = 1/(sigma*sigma-sigma*matrix[k][k]);
-		calculation_result+="β<sub>"+(k+1)+"</sub>="+beta+"<br>";
-		
-		var u = new Array(size);
-		for(var i=0; i<k; ++i)
-		{
-			u[i]=0;
-		}
-		u[k]=matrix[i][k]-sigma;
-		for(var i=k+1; i<size; ++i)
-		{
-			u[i] = matrix[i][k];
-		}
-		calculation_result+="u<sup>("+(k+1)+")</sup>=[";
-		for(var i=0; i<size; ++i)
-		{
-			calculation_result+=u[i];
-			if(i!=size-1)
-			{
-				calculation_result+=" ";
-			}
-		}
-		calculation_result+="]<br>";
-		calculation_result+="</br>Матриця u<sup>("+(k+1)+")</sup>u<sup>("+(k+1)+")T</sup></br>";
-		var u_matrix = new Array(size);
-		for(var i=0; i<size; ++i)
-		{
-			u_matrix[i] = new Array(size);
-			calculation_result+="[";
+			t[i] = new Array(size);
 			for(var j=0; j<size; ++j)
 			{
-				u_matrix[i][j]=u[i]*u[j];
-				calculation_result+=u_matrix[i][j];
-				if(j!=size-1)
-				{
-					calculation_result+=" ";
-				}
+				t[i][j]=0;
 			}
-			calculation_result+="]</br>";
+			t[i][i] = 1;
 		}
-		
-		var one_matrix = new Array(size);
+		t[k][k] = 1 / matrix[k][k];
+		for (var i = k + 1; i < size; ++i)
+		{
+			t[i][k] = -matrix[i][k] / matrix[k][k];
+		}
+		//a=t*a
+		var a_temp = new Array(size);
 		for(var i=0; i<size; ++i)
 		{
-			one_matrix[i] = new Array(size);
+			a_temp[i] = new Array(size);
 			for(var j=0; j<size; ++j)
 			{
-				if(i==j)
-				{
-					one_matrix[i][j]=1;
-				}
-				else
-				{
-					one_matrix[i][j]=0;
-				}
-			}
-		}
-		//u_matrix * beta
-		for(var i=0; i<size; ++i)
-		{
-			for(var j=0; j<size; ++j)
-			{
-				u_matrix[i][j]*=beta;
-			}
-		}
-		calculation_result+="</br>Матриця Q<sup>("+(k+1)+")</sup>=I-β<sub>"+(k+1)+"</sub>*u<sup>("+(k+1)+")</sup>u<sup>("+(k+1)+")T</sup></br>";
-		var q_matrix = new Array(size);
-		for(var i=0; i<size; ++i)
-		{
-			q_matrix[i] = new Array(size);
-			calculation_result+="[";
-			for(var j=0; j<size; ++j)
-			{
-				q_matrix[i][j] = one_matrix[i][j]-u_matrix[i][j];
-				calculation_result+=q_matrix[i][j];
-				if(j!=size-1)
-				{
-					calculation_result+=" ";
-				}
-			}
-			calculation_result+="]</br>";
-		}
-		calculation_result+="</br>Матриця A<sup>("+(k+1)+")</sup>=Q<sup>("+(k+1)+")</sup>*A<sup>("+(k)+")</sup></br>";
-		var a_matrix = new Array(size);
-		for(var i=0; i<size; ++i)
-		{
-			a_matrix[i] = new Array(size);
-			for(var j=0; j<size; ++j)
-			{
-				a_matrix[i][j]=0;
-			}
-		}
-		for(var i=0; i<size; ++i)
-		{
-			for(var j=0; j<size; ++j)
-			{
+				a_temp[i][j] = 0;
 				for(var p=0; p<size; ++p)
 				{
-					a_matrix[i][j] += q_matrix[i][p]*matrix[p][j];
+					a_temp[i][j] += t[i][p]*matrix[p][j];
 				}
 			}
 		}
 		for(var i=0; i<size; ++i)
 		{
-			calculation_result+="[";
 			for(var j=0; j<size; ++j)
 			{
-				calculation_result+=a_matrix[i][j];
-				matrix[i][j] = a_matrix[i][j];
-				if(j!=size-1)
-				{
-					calculation_result+=" ";
-				}
+				matrix[i][j] = a_temp[i][j];
 			}
-			calculation_result+="]</br>";
 		}
-		calculation_result+="</br>Вектор B<sup>("+(k+1)+")</sup>=Q<sup>("+(k+1)+")</sup>*B<sup>("+(k)+")</sup></br>[";
+		//b=t*b
 		var b_vector = new Array(size);
 		for(var i=0; i<size; ++i)
 		{
 			b_vector[i]=0;
 			for(var j=0; j<size; ++j)
 			{
-				b_vector[i] += q_matrix[i][j]*vector[j];
+				b_vector[i] += t[i][j]*vector[j];
 			}
 		}
 		for(var i=0; i<size; ++i)
 		{
-			calculation_result+=b_vector[i];
 			vector[i] = b_vector[i];
-			if(i!=size-1)
+		}
+	}
+	for (var k = size - 1; k >= 0; --k)
+	{
+		var v = new Array(size);
+		for (var i = 0; i < size; ++i)
+		{
+			v[i] = new Array(size);
+			for(var j=0; j<size; ++j)
 			{
-				calculation_result+=" ";
+				v[i][j] = 0;
+			}
+			v[i][i] = 1;
+		}
+		for (var i = 0; i < k; ++i)
+		{
+			v[i][k] = -matrix[i][k];
+		}
+		//a=v*a
+		var a_temp = new Array(size);
+		for(var i=0; i<size; ++i)
+		{
+			a_temp[i] = new Array(size);
+			for(var j=0; j<size; ++j)
+			{
+				a_temp[i][j] = 0;
+				for(var p=0; p<size; ++p)
+				{
+					a_temp[i][j] += v[i][p]*matrix[p][j];
+				}
 			}
 		}
-	}
-	
-	var x = new Array(size);
-	for(var i=0; i<size; ++i)
-	{
-		x[i]=0;
+		for(var i=0; i<size; ++i)
+		{
+			for(var j=0; j<size; ++j)
+			{
+				matrix[i][j] = a_temp[i][j];
+			}
+		}
+		//b=v*b
+		var b_vector = new Array(size);
+		for(var i=0; i<size; ++i)
+		{
+			b_vector[i]=0;
+			for(var j=0; j<size; ++j)
+			{
+				b_vector[i] += v[i][j]*vector[j];
+			}
+		}
+		for(var i=0; i<size; ++i)
+		{
+			vector[i] = b_vector[i];
+		}
 	}
 	calculation_result+="</br><b style='color:red;'>Розвязки</b></br>";
-	for (var i = size - 1; i >= 0; --i)
-	{
-		var sum1 = 0;
-		for (var j = i + 1; j < size; ++j)
-		{
-			sum1 -= matrix[i][j] * x[j];
-		}
-		x[i] = (vector[i] + sum1) / matrix[i][i];
-	}
 	for(var i=0; i<size; ++i)
 	{
-		calculation_result+="x<sub>"+(i+1)+"</sub>="+x[i]+"</br>";
+		calculation_result+="x<sub>"+(i+1)+"</sub>="+vector[i]+"</br>";
 	}
 	
 	
